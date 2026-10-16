@@ -36,6 +36,12 @@ economy, a list of the five screens. Keep each under 20 lines.
 **Stop when the ground is covered.** Not when you have run out of questions. The ground is the list
 below; when each item has either an answer or a conscious "lo decidimos en el GDD", write the brief.
 
+**Fast path for a complete brief.** If the first message already covers most of the ground (roughly 8
+of the 10 items: moment, loop, session, audience/platform, economy stance, art, scope, success), ask
+**zero** questions. Write the brief, mark the gaps `[OPEN]` for the GDD, and ask only for the one
+confirmation before the GDD. Asking about references or risks "para completar" when the user has
+clearly already thought it through is the most common way this skill wastes their time.
+
 ## Ground to cover
 
 Read `references/question-bank.md` for concrete phrasings and for the Roblox-specific follow-ups. The
@@ -61,11 +67,17 @@ resumen de lo que entendí. Si está bien, paso a escribir el documento de dise�
 After the yes, create or update `docs/gamedev/state.md`:
 
 ```
+# Estado · <Juego>
+engine: roblox
 phase: 1-design
 milestone: none
 next_gate: GDD approval
 open_decisions: <count>
+last_qa: none
+updated: YYYY-MM-DD
 ```
+
+(That is the canonical schema; every skill rewrites the same fields.)
 
 ## Red flags
 

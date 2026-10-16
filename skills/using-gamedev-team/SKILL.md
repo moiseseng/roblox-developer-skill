@@ -44,9 +44,21 @@ at the milestone gates listed below. This is what the user asked for, in their w
 
 Phases 2 and 3 run in parallel after the GDD is approved. Phases 4 to 6 repeat per milestone.
 
-**How to find the current phase:** read `docs/gamedev/state.md` in the game repo if it exists. It is a
-short file: current phase, current milestone, next gate, open decisions. Every skill updates it when it
-finishes. If it doesn't exist and there is no `docs/gamedev/gdd.md`, you are at phase 0.
+**How to find the current phase:** read `docs/gamedev/state.md` in the game repo if it exists. Every
+skill rewrites it when it finishes, always with the same fields:
+
+```
+# Estado · <Juego>
+engine: roblox
+phase: 0-discovery | 1-design | 2-tech-design | 3-art | 4-planning | 5-build | 6-qa | 7-release
+milestone: none | M0 | M1 | M2 | M3 | M4
+next_gate: GDD approval | M0 demo | M1 demo | ... | public launch
+open_decisions: <count of [OPEN] items in the GDD>
+last_qa: none | <path to last QA report> (<pass|blocked>)
+updated: YYYY-MM-DD
+```
+
+If it doesn't exist and there is no `docs/gamedev/gdd.md`, you are at phase 0.
 
 **Routing examples**
 - "Quiero hacer un juego de ..." / "tengo una idea" → `gamedev-team:discovery`.
@@ -68,6 +80,12 @@ Once the user approves the GDD:
 4. **Gate:** stop and show the user the milestone. Tell them how to play it, what QA found, and what you decided along the way. Ask for a yes to continue. This is the only mandatory check-in per milestone.
 
 You may ask a question mid-milestone only when the answer changes the GDD (a mechanic, the economy, the art style, the scope) or when the user must act (publish settings, pay for an asset, grant API access). Anything else: decide, log it, keep going.
+
+## Commits
+
+Approving the GDD is the user asking for the build, so the skills commit to the game repo as they go:
+one commit per approved document, one per task. Never push, open PRs or create remote repos unless the
+user asks. Before the GDD is approved, commit only documents the user has said yes to.
 
 ## Language
 

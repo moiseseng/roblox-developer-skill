@@ -214,6 +214,9 @@ def main():
     ap.add_argument("--title", default=None); ap.add_argument("--lang", default="es")
     a = ap.parse_args()
     md = Path(a.input).read_text(encoding="utf-8")
+    bad = re.findall(r"\[(?:OK|PROP|OPEN)\|[^\]]*\]", md)
+    if bad:
+        print(f"warning: {len(bad)} compound badge(s) won't render, use one badge per statement: {sorted(set(bad))[:5]}", file=sys.stderr)
     body, toc = render(md)
     first_h1 = re.search(r"^#\s+(.*)$", md, flags=re.M)
     title = a.title or (first_h1.group(1).strip() if first_h1 else Path(a.input).stem)

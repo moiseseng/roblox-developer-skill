@@ -34,19 +34,34 @@ question if something needs them. Use their language.
 
 ### 2. Numbers, not adjectives
 
-"Progression feels rewarding" is not a design. Write the first 30 minutes as a table: minute, what the
+"Progression feels rewarding" is not a design. Write the first session as a table: minute, what the
 player does, what they earn, what they can afford, what unlocks. Write cost curves as formulas with the
-base and the growth factor (`cost(n) = base * growth^n`) and show n = 1, 5, 10, 20. Write session targets
-in minutes and retention targets in percentages. If you don't know a number yet, write a placeholder with
-a range and mark it `[PROP]` so the economy pass in `technical-design` and the first playtest can tune it.
+base and the growth factor (`cost(n) = base * growth^n`) and show the levels that matter for this game
+(n = 1, 5, 10, 20 for a long simulator; n = 1, 2, 3, 5 for a three-slot game). Session targets in minutes,
+retention targets in percentages. If you don't know a number yet, write a range and mark it `[PROP]` so
+the economy pass in `technical-design` and the first playtest can tune it.
+
+Don't connect the numbers in your head. Run the bundled greedy-player simulator and paste its table:
+
+```bash
+python3 <skill-dir>/scripts/economy_sim.py --spec docs/gamedev/economy.json
+```
+
+`economy.json` holds the GDD's formulas (see `economy_sim.py --example`). The output shows minute by
+minute when a greedy player affords each upgrade and whether time-to-next stays bounded; if minute 10
+has nothing to buy or minute 1 has everything, fix the formula before writing prose about it.
 
 ### 3. Status badges
 
 Every design statement carries one of three states, and `design.html` renders them as badges:
 
-- `[OK]` decided by the user, or approved by them in a playback.
+- `[OK]` the user said it (brief or chat), or explicitly accepted that specific statement.
 - `[PROP]` proposed by you, reasonable default, revisable without asking.
 - `[OPEN]` needs the user. Collect these in the final section; there should be few.
+
+A "sí, sigue" on a section means "reasonable, continue", not "every proposal is now decided": `[PROP]`
+items stay `[PROP]` unless the user names them. That is what lets you tune them later without asking.
+One badge per statement; `[OK|PROP]` is not a badge and won't render.
 
 ### 4. Scope cut: v1 and later
 
@@ -57,7 +72,8 @@ half-loops. Say what "done" means for each v1 system in one testable sentence; Q
 ### 5. Approval and lock
 
 When all sections have a yes, write the version line `Versión 1.0 · aprobado YYYY-MM-DD` at the top,
-generate `design.html` (below), commit, and update `docs/gamedev/state.md` to `phase: 2-tech-design`.
+generate `design.html` (below), update `docs/gamedev/state.md` (`phase: 2-tech-design`,
+`next_gate: M0 demo`), then commit everything in one commit (`docs(gdd): v1.0 aprobado`).
 Tell the user: from here you take the wheel; the next time you need them is the M0 demo, unless something
 changes the GDD.
 

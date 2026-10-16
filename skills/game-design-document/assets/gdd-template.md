@@ -1,6 +1,6 @@
 # <Nombre del juego> · Documento de diseño
 Versión 0.1 · borrador · YYYY-MM-DD · Motor: Roblox
-Leyenda: [OK] decidido · [PROP] propuesto, revisable · [OPEN] pendiente del dueño
+Leyenda: [OK] decidido · [PROP] propuesto, revisable · [OPEN] pendiente del dueño (un solo badge por frase, nunca dos juntos)
 
 ## 1. Visión
 <Dos párrafos: qué es, para quién, por qué existe. La frase de una línea que diría un jugador a un amigo.>
@@ -14,7 +14,7 @@ Tres a cinco. Cada uno con una frase de "esto significa que..." y una de "...y p
 
 ## 3. Bucle principal
 **Micro (segundos):** <acción → feedback → recompensa>
-**Sesión (minutos):** <tabla minuto a minuto de los primeros 30 min>
+**Sesión (minutos):** <tabla de la primera sesión completa; 30 min por defecto, o la duración objetivo del GDD>
 
 | Minuto | Qué hace | Qué gana | Qué puede comprar | Qué desbloquea |
 |---|---|---|---|---|
@@ -29,7 +29,7 @@ Tres a cinco. Cada uno con una frase de "esto significa que..." y una de "...y p
 ## 4. Mecánicas
 Una subsección por mecánica de v1. Para cada una: regla, input (PC/móvil/mando), feedback, casos límite, "hecho significa".
 
-### 4.1 <Mecánica> [OK|PROP]
+### 4.1 <Mecánica> [PROP]
 - Regla: ...
 - Input: PC ... · Móvil ... · Mando ...
 - Feedback: visual / sonido / UI
@@ -48,8 +48,10 @@ coste(n)              = base × crecimiento^n      (base = ..., crecimiento = ..
 | coste | | | | |
 | minutos para pagarlo | | | | |
 
+(Adapta los n al ritmo del juego: en un juego de 3 macetas y 15 min, n = 1, 2, 3, 5. Lo que importa es que ganancia y coste conecten; usa `scripts/economy_sim.py` y pega su tabla aquí.)
+
 **Ritmo objetivo:** primera compra < 1 min · primera mejora grande ≈ 10 min · prestigio ≈ día 2 [PROP]
-**Qué se compra con Robux y qué nunca:** ... (postura: <cosméticos | progreso suave | ...>) [OK|OPEN]
+**Qué se compra con Robux y qué nunca:** ... (postura: <cosméticos | progreso suave | ...>) [OPEN]
 
 ## 6. Contenido
 Mapa/zonas, enemigos/objetos/ítems, niveles. Tabla con nombre, función en el loop, v1 o después.
