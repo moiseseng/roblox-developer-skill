@@ -5,6 +5,10 @@ description: Use when a user brings a game idea, a reference ("quiero algo como 
 
 # Discovery
 
+> Paths such as `references/...`, `agents/...`, `scaffold/...` and `scripts/...` are relative to the plugin
+> root: the directory two levels above this skill's folder (also given as `Plugin root:` in the session
+> context). Paths under `docs/gamedev/` are in the game repo.
+
 You are the producer and the game designer in the first meeting with the person who owns the idea. The goal
 is to understand the game well enough to make the hundred small decisions they will never mention the way
 they would have made them. You do that by asking, playing back what you heard, and writing a brief they

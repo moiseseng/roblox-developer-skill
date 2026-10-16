@@ -15,7 +15,10 @@ of those roles, and each role has a skill. Your job at the start of every game-r
 figure out which phase the project is in and open that skill before doing anything else, including
 asking clarifying questions. Skills tell you *how* to ask.
 
-Plugin root = the directory two levels above this file. Paths below are relative to it.
+**Plugin root** is the path given as `Plugin root:` in the session context, or two levels above any
+gamedev-team SKILL.md's base directory. Paths below (`skills/`, `agents/`, `references/`, `scaffold/`,
+`scripts/`) are relative to it. Open a phase skill with the Skill tool as `gamedev-team:<name>`; if the
+Skill tool isn't available, read `<plugin root>/skills/<name>/SKILL.md`.
 
 ## The one rule that organizes everything
 
@@ -27,17 +30,17 @@ at the milestone gates listed below. This is what the user asked for, in their w
 
 ## Pipeline and routing
 
-| Phase | Role | Skill | Produces (in the game repo) |
+| Phase | Role | Skill (Skill tool name) | Produces (in the game repo) |
 |---|---|---|---|
-| 0. Discovery | Producer + Game Designer | `skills/discovery` | `docs/gamedev/discovery.md` |
-| 1. Design | Game Designer | `skills/game-design-document` | `docs/gamedev/gdd.md`, `design.html` |
-| 2. Tech design | Dev Lead | `skills/technical-design` | `docs/gamedev/tech-design.md` |
-| 3. Art direction | 3D Artist | `skills/art-direction` | `docs/gamedev/art-bible.md`, `docs/gamedev/asset-list.md` |
-| 4. Planning | Producer + Dev Lead | `skills/production-planning` | `docs/gamedev/plans/YYYY-MM-DD-<milestone>.md` |
-| 5. Build | Engineer (+ Artist) | `skills/implementing` | code, assets, tests, commits |
-| 6. QA | QA Lead | `skills/qa-playtesting` | `docs/gamedev/qa/YYYY-MM-DD-<scope>.md` |
-| 7. Release & live-ops | Producer | `skills/release-liveops` | `docs/gamedev/release-checklist.md`, analytics, iteration brief |
-| meta | anyone | `skills/extending-gamedev-team` | new skills, new engine references |
+| 0. Discovery | Producer + Game Designer | `gamedev-team:discovery` | `docs/gamedev/discovery.md` |
+| 1. Design | Game Designer | `gamedev-team:game-design-document` | `docs/gamedev/gdd.md`, `design.html` |
+| 2. Tech design | Dev Lead | `gamedev-team:technical-design` | `docs/gamedev/tech-design.md` |
+| 3. Art direction | 3D Artist | `gamedev-team:art-direction` | `docs/gamedev/art-bible.md`, `docs/gamedev/asset-list.md` |
+| 4. Planning | Producer + Dev Lead | `gamedev-team:production-planning` | `docs/gamedev/plans/YYYY-MM-DD-<milestone>.md` |
+| 5. Build | Engineer (+ Artist) | `gamedev-team:implementing` | code, assets, tests, commits |
+| 6. QA | QA Lead | `gamedev-team:qa-playtesting` | `docs/gamedev/qa/YYYY-MM-DD-<scope>.md` |
+| 7. Release & live-ops | Producer | `gamedev-team:release-liveops` | `docs/gamedev/release-checklist.md`, analytics, iteration brief |
+| meta | anyone | `gamedev-team:extending-gamedev-team` | new skills, new engine references |
 
 Phases 2 and 3 run in parallel after the GDD is approved. Phases 4 to 6 repeat per milestone.
 
@@ -46,10 +49,10 @@ short file: current phase, current milestone, next gate, open decisions. Every s
 finishes. If it doesn't exist and there is no `docs/gamedev/gdd.md`, you are at phase 0.
 
 **Routing examples**
-- "Quiero hacer un juego de ..." / "tengo una idea" → `discovery`.
-- "Ya tengo claro el juego, escribe el documento" → `discovery` still, but it will be short: confirm the brief, then `game-design-document`.
-- "Cambia X" or "añade Y" on a project with an approved GDD → the change request protocol in `game-design-document` first. Never patch code to add a mechanic the GDD doesn't have.
-- "Hay un bug" → `implementing` (its debugging section), then `qa-playtesting` to confirm.
+- "Quiero hacer un juego de ..." / "tengo una idea" → `gamedev-team:discovery`.
+- "Ya tengo claro el juego, escribe el documento" → `discovery` still, but it will be short: confirm the brief, then `gamedev-team:game-design-document`.
+- "Cambia X" or "añade Y" on a project with an approved GDD → the change request protocol in `gamedev-team:game-design-document` first. Never patch code to add a mechanic the GDD doesn't have.
+- "Hay un bug" → `gamedev-team:implementing` (its debugging section), then `gamedev-team:qa-playtesting` to confirm.
 - "¿Cómo se juega esto?" / "¿qué métricas?" → answer from the GDD and `references/roblox/market-and-design.md`.
 - A request outside games → this plugin doesn't apply; proceed normally.
 

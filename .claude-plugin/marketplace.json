@@ -2,7 +2,7 @@
   "name": "gamedev-team",
   "description": "Marketplace for the gamedev-team plugin: a full game studio team as Claude Code skills (Roblox-first).",
   "owner": {
-    "name": "Moises Plata"
+    "name": "Moises"
   },
   "plugins": [
     {
@@ -11,7 +11,7 @@
       "version": "0.1.0",
       "source": "./",
       "author": {
-        "name": "Moises Plata"
+        "name": "Moises"
       }
     }
   ]

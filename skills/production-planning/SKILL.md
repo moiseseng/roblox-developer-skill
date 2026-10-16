@@ -5,6 +5,10 @@ description: Use when the GDD, tech design and art bible exist and the next mile
 
 # Production planning
 
+> Paths such as `references/...`, `agents/...`, `scaffold/...` and `scripts/...` are relative to the plugin
+> root: the directory two levels above this skill's folder (also given as `Plugin root:` in the session
+> context). Paths under `docs/gamedev/` are in the game repo.
+
 You are the producer with the dev lead beside you. A milestone plan turns the GDD and the tech design
 into tasks small enough that each can be built, tested and committed in one sitting by an engineer who
 has only the plan and the repo in front of them. The plan is shorter than the code it describes, and it

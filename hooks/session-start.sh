@@ -21,6 +21,8 @@ json_escape() {
 
 CONTEXT="<gamedev-team>
 The gamedev-team plugin is installed. Its routing skill follows. Read the relevant phase skill before acting on any game-development request.
+Plugin root: $ROOT
+Phase skills can be invoked with the Skill tool as gamedev-team:<name>, or read from <plugin root>/skills/<name>/SKILL.md.
 
 $BODY
 </gamedev-team>"

@@ -5,6 +5,10 @@ description: Use when someone wants to add, change or improve a gamedev-team ski
 
 # Extending gamedev-team
 
+> Paths such as `references/...`, `agents/...`, `scaffold/...` and `scripts/...` are relative to the plugin
+> root: the directory two levels above this skill's folder (also given as `Plugin root:` in the session
+> context). Paths under `docs/gamedev/` are in the game repo.
+
 The plugin grows the way a studio does: a lesson learned on one game becomes a rule, a template or a
 reference so the next game doesn't relearn it. Keep that discipline: fix the skill, not just the project.
 

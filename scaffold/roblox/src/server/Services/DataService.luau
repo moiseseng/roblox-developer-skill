@@ -71,10 +71,12 @@ local function write(player: Player, profile: Profile, release: boolean): boolea
 	end
 	profile.lastSeen = os.time()
 	for attempt = 1, 3 do
+		local lostLock = false
 		local ok, err = pcall(function()
 			store:UpdateAsync(keyFor(player), function(stored: any): any
 				local record: Record = if typeof(stored) == "table" then stored else { data = nil, lock = nil }
 				if lockIsForeign(record.lock) then
+					lostLock = true
 					return nil -- someone else owns it now; don't clobber
 				end
 				record.data = profile
@@ -82,6 +84,10 @@ local function write(player: Player, profile: Profile, release: boolean): boolea
 				return record
 			end)
 		end)
+		if ok and lostLock then
+			warn(`[DataService] save skipped for {player.Name}: another server holds the session lock`)
+			return false
+		end
 		if ok then
 			return true
 		end

@@ -5,6 +5,10 @@ description: Use when executing tasks from a milestone plan, writing or changing
 
 # Implementing
 
+> Paths such as `references/...`, `agents/...`, `scaffold/...` and `scripts/...` are relative to the plugin
+> root: the directory two levels above this skill's folder (also given as `Plugin root:` in the session
+> context). Paths under `docs/gamedev/` are in the game repo.
+
 You are the engineer. You work from the current plan in `docs/gamedev/plans/`, one task at a time, and
 you leave each task in a state the next engineer (a fresh context) can trust: tests green, lint clean,
 committed, plan ticked. You verify in Studio, not in your head.

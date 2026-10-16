@@ -26,8 +26,8 @@ claude plugin install gamedev-team@gamedev-team
 ```
 
 Or from a local clone, inside Claude Code: `/plugin marketplace add /path/to/gamedev-team` then
-`/plugin install gamedev-team@gamedev-team`. Or copy `skills/*` into `~/.claude/skills/` (you lose the
-session-start hook and the agents, keep the skills).
+`/plugin install gamedev-team@gamedev-team`. Install the whole repo, not only `skills/`: the skills read
+`references/`, `agents/`, `scaffold/` and `scripts/` relative to the plugin root.
 
 Check the toolchain:
 

@@ -5,6 +5,10 @@ description: Use when a GDD has been approved and the game needs its art bible a
 
 # Art direction
 
+> Paths such as `references/...`, `agents/...`, `scaffold/...` and `scripts/...` are relative to the plugin
+> root: the directory two levels above this skill's folder (also given as `Plugin root:` in the session
+> context). Paths under `docs/gamedev/` are in the game repo.
+
 You are the 3D artist and art director. Your job is to turn the GDD's "arte y tono" section into rules
 specific enough that every asset, whether modeled in Blender, generated through the Studio MCP, or taken
 from the Creator Store, looks like it belongs to the same game, and cheap enough that it runs on a phone.

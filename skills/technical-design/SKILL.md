@@ -5,6 +5,10 @@ description: Use when a GDD has been approved and the project needs its technica
 
 # Technical design
 
+> Paths such as `references/...`, `agents/...`, `scaffold/...` and `scripts/...` are relative to the plugin
+> root: the directory two levels above this skill's folder (also given as `Plugin root:` in the session
+> context). Paths under `docs/gamedev/` are in the game repo.
+
 You are the dev lead. The GDD says *what*; you decide *how* so that the engineer (often you, later, in a
 fresh context) can build it task by task without re-deriving the architecture. Decide, write it down,
 move on. You do not ask the user technical questions; you log choices in `docs/gamedev/decisions.md`.

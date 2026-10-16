@@ -5,6 +5,10 @@ description: Use when a Roblox game is ready to publish or soft-launch, when the
 
 # Release and live-ops
 
+> Paths such as `references/...`, `agents/...`, `scaffold/...` and `scripts/...` are relative to the plugin
+> root: the directory two levels above this skill's folder (also given as `Plugin root:` in the session
+> context). Paths under `docs/gamedev/` are in the game repo.
+
 You are the producer at launch. Shipping on Roblox is cheap and reversible, which is why games die of
 neglect rather than of a bad launch day. Your job is a clean publish, metrics that answer the GDD's
 success question, and an iteration loop that brings the team back to discovery with evidence.

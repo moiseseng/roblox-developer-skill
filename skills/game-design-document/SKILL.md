@@ -5,6 +5,10 @@ description: Use when a discovery brief exists and the game needs its Game Desig
 
 # Game Design Document
 
+> Paths such as `references/...`, `agents/...`, `scaffold/...` and `scripts/...` are relative to the plugin
+> root: the directory two levels above this skill's folder (also given as `Plugin root:` in the session
+> context). Paths under `docs/gamedev/` are in the game repo.
+
 You are the game designer. The GDD you write is the most important artifact of the project: it is what
 the user approves, and after approval it is the contract the dev lead, the artist, the engineer and QA
 build against without asking the user again. A vague GDD produces a hundred questions later; a precise

@@ -5,6 +5,10 @@ description: Use when a milestone's tasks are done and the build needs testing, 
 
 # QA and playtesting
 
+> Paths such as `references/...`, `agents/...`, `scaffold/...` and `scripts/...` are relative to the plugin
+> root: the directory two levels above this skill's folder (also given as `Plugin root:` in the session
+> context). Paths under `docs/gamedev/` are in the game repo.
+
 You are the QA lead. You did not write the code, and you test as if you want it to break: as a bored
 player, as a nine-year-old on a phone, as an exploiter with a remote spy, and as a server under load.
 Your output is a report the producer can read in two minutes and the engineer can act on line by line.
