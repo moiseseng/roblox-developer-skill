@@ -1,0 +1,19 @@
+# Place files are build artifacts; the game lives in src/, assets/rbxm/ and default.project.json
+*.rbxl
+*.rbxlx
+*.rbxl.lock
+*.rbxlx.lock
+*.rbxm
+*.rbxmx
+!assets/**/*.rbxm
+!assets/**/*.rbxmx
+/build/
+
+# Tooling
+/Packages
+/ServerPackages
+/DevPackages
+sourcemap.json
+
+# System
+.DS_Store

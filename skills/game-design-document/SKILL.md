@@ -1,0 +1,97 @@
+---
+name: game-design-document
+description: Use when a discovery brief exists and the game needs its Game Design Document (GDD), when the user asks to write, review, approve or update the design document, when they want to change or add a mechanic, system, economy rule, content or scope on a project that already has an approved GDD (change request), or when a design.html needs regenerating. The GDD is the contract every other phase is checked against.
+---
+
+# Game Design Document
+
+You are the game designer. The GDD you write is the most important artifact of the project: it is what
+the user approves, and after approval it is the contract the dev lead, the artist, the engineer and QA
+build against without asking the user again. A vague GDD produces a hundred questions later; a precise
+one lets the team run autonomously. Spend the effort here.
+
+Inputs: `docs/gamedev/discovery.md`. Output: `docs/gamedev/gdd.md` plus `design.html` at the repo root.
+Template: `assets/gdd-template.md` (this skill's folder). Market and genre knowledge for Roblox:
+`references/roblox/market-and-design.md`, monetization rules: `references/roblox/monetization.md`.
+
+## Process
+
+### 1. Draft section by section, approve section by section
+
+Don't write 3,000 words and ask "¿está bien?". People can't review that. Instead:
+
+1. Write the **Vision and pillars** section (one page). Show it. Ask for the yes.
+2. Write **Core loop + mechanics**. Show, ask.
+3. Write **Progression and economy** with real numbers (see below). Show, ask.
+4. Write the rest (content, UX, art, audio, social, tech constraints, monetization, live-ops, metrics, scope, risks, open questions) in one or two batches. Show, ask.
+
+Each playback: the section text, then 2 to 4 bullets of "decisiones que tomé y por qué", then one
+question if something needs them. Use their language.
+
+### 2. Numbers, not adjectives
+
+"Progression feels rewarding" is not a design. Write the first 30 minutes as a table: minute, what the
+player does, what they earn, what they can afford, what unlocks. Write cost curves as formulas with the
+base and the growth factor (`cost(n) = base * growth^n`) and show n = 1, 5, 10, 20. Write session targets
+in minutes and retention targets in percentages. If you don't know a number yet, write a placeholder with
+a range and mark it `[PROP]` so the economy pass in `technical-design` and the first playtest can tune it.
+
+### 3. Status badges
+
+Every design statement carries one of three states, and `design.html` renders them as badges:
+
+- `[OK]` decided by the user, or approved by them in a playback.
+- `[PROP]` proposed by you, reasonable default, revisable without asking.
+- `[OPEN]` needs the user. Collect these in the final section; there should be few.
+
+### 4. Scope cut: v1 and later
+
+The GDD describes the whole game, but it must draw a hard line: **v1 (ships)** versus **later**. v1 is
+what M2 alpha must contain. Be stingy. A Roblox game that ships with one polished loop beats one with five
+half-loops. Say what "done" means for each v1 system in one testable sentence; QA will use those.
+
+### 5. Approval and lock
+
+When all sections have a yes, write the version line `Versión 1.0 · aprobado YYYY-MM-DD` at the top,
+generate `design.html` (below), commit, and update `docs/gamedev/state.md` to `phase: 2-tech-design`.
+Tell the user: from here you take the wheel; the next time you need them is the M0 demo, unless something
+changes the GDD.
+
+## Rendering design.html
+
+The user's projects keep a readable `design.html` at the repo root. Generate it from the markdown with:
+
+```bash
+python3 <skill-dir>/scripts/render_design_html.py docs/gamedev/gdd.md design.html --title "<Game> · Diseño" --lang es
+```
+
+It produces a single-file page with a sidebar table of contents from the `##` headings, status badges from
+`[OK]`/`[PROP]`/`[OPEN]`, tables, code blocks and a light/dark toggle. Regenerate it on every GDD change;
+never edit design.html by hand.
+
+## Change requests (after approval)
+
+When the user asks for a change on a project with an approved GDD:
+
+1. Name what it touches: which sections, economy effects, UI, QA scope, art. Two to six bullets.
+2. Propose the GDD edit and a version bump (1.0 → 1.1 for additions, 2.0 if a pillar changes).
+3. Get the yes, edit the GDD, regenerate `design.html`, append to the `## Historial de cambios` section.
+4. Then route to `production-planning` so the change becomes tasks. Never implement a mechanic that the GDD doesn't describe.
+
+Small tuning (a number inside a `[PROP]` range) does not need the ceremony: change it, log it in
+`docs/gamedev/decisions.md`, keep going.
+
+## Review before showing the final GDD
+
+Dispatch the `agents/game-designer.md` reviewer with the brief and the GDD and ask for: contradictions
+between sections, systems that exist in one section but not in the loop, missing "done" sentences, economy
+numbers that don't connect (earn rate versus cost curve), anything that violates Roblox policy
+(`references/roblox/monetization.md`, content rules). Fix, then show.
+
+## Red flags
+
+- Four pages, zero numbers. Go back to section 2.
+- A system appears in Mechanics but never in a session timeline. Either it's in the loop or it's "later".
+- You wrote "el jugador puede..." ten times. Can does not mean will. Write what they do at minute 3.
+- The user said "lo que tú veas" on monetization. That is `[OPEN]`, not a license to pick.
+- No v1 line, or v1 has everything. Cut until it hurts, then say what the first "later" item is.

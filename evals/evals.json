@@ -1,0 +1,26 @@
+{
+  "skill_name": "gamedev-team",
+  "evals": [
+    {
+      "id": 1,
+      "name": "vague-idea-triggers-discovery",
+      "prompt": "quiero hacer un juego de roblox tipo simulador pero de cocinar, que la gente cocine hamburguesas y las venda y vaya mejorando la cocina. no se mucho mas, ayudame a empezar",
+      "expected_output": "Opens discovery (announces it), asks exactly ONE grounded question in Spanish about the moment/loop or audience, offers the 'dump everything' exit, does not propose a GDD or code yet, does not list genre options.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "full-brief-produces-gdd-with-numbers",
+      "prompt": "Ya tengo claro el juego: 'Goo Garden', Roblox, para 9-13 años, móvil primero, servers de 8. Loop: plantas babosas que crecen solas, las cosechas tocándolas, vendes el goo, compras semillas mejores y más macetas. Sesión de 10-15 min, vuelves porque las plantas crecen offline (máx 8h). Monetización: cosméticos y un pase 2x goo, nada de pay-to-win. Arte low-poly, colores pastel, 3 adjetivos: pegajoso, alegre, redondo. Quiero algo jugable en 3 semanas. Éxito: que mis sobrinos vuelvan al día siguiente sin que yo les diga. Escribe el documento de diseño.",
+      "expected_output": "Writes docs/gamedev/discovery.md briefly confirming the brief, then drafts the GDD section by section (vision/pillars first, asks for approval before continuing), in Spanish, with a minute-by-minute session table and cost formula with base/growth and n=1,5,10,20, [OK]/[PROP]/[OPEN] badges, a v1 vs later scope cut, and 'hecho significa' sentences. Mentions design.html rendering. Does not write code.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "change-request-after-approved-gdd",
+      "prompt": "El GDD de Goo Garden ya está aprobado (v1.0) y estamos en M0. Se me ocurrió que las plantas puedan tener mascotas que las rieguen solas, ¿lo metes?",
+      "expected_output": "Routes through the change request protocol: names the GDD sections touched (loop, economy, content, UI, QA), proposes a GDD edit with a version bump (1.1), asks for the yes before implementing, suggests it may belong to 'later' given M0 scope; does not start coding pets.",
+      "files": []
+    }
+  ]
+}

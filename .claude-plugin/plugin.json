@@ -1,0 +1,22 @@
+{
+  "name": "gamedev-team",
+  "description": "A full game-development team as skills: producer, game designer, dev lead, engineer, 3D artist and QA. Takes a game from idea to published release (0 -> 1) with a discovery interview, a locked Game Design Document, then autonomous tech design, planning, implementation, QA and release. Roblox-first, engine-extensible.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Moises Plata"
+  },
+  "homepage": "https://github.com/moiseseng/gamedev-team",
+  "repository": "https://github.com/moiseseng/gamedev-team",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "gamedev",
+    "roblox",
+    "luau",
+    "rojo",
+    "game-design",
+    "gdd",
+    "qa",
+    "workflows"
+  ]
+}
