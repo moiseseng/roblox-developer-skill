@@ -21,7 +21,7 @@ before implementation.
 As a plugin (recommended):
 
 ```bash
-claude plugin marketplace add moiseseng/roblox-team-ai
+claude plugin marketplace add moiseseng/roblox-developer-skill
 claude plugin install gamedev-team@gamedev-team
 ```
 
