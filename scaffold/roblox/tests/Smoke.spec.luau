@@ -5,6 +5,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
 
+local Runner = require(script.Parent.Runner)
 local Config = require(ReplicatedStorage.Shared.Config)
 local Net = require(ReplicatedStorage.Shared.Net)
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
@@ -13,7 +14,7 @@ local Hub = require(ServerScriptService.Server.World.Hub)
 local VALID_KINDS = { RemoteEvent = true, RemoteFunction = true, UnreliableRemoteEvent = true }
 local WORLD_INSTANCE_BUDGET = 500 -- from tech-design §8; raise deliberately, never silently
 
-return function(t)
+return function(t: Runner.T)
 	t.describe("Remotes", function()
 		t.it("declares only valid kinds with PascalCase names", function()
 			for name, kind in Remotes do

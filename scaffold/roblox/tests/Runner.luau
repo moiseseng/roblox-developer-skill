@@ -59,17 +59,17 @@ export type Expectation = {
 
 local function expect(value: any): Expectation
 	local e = {} :: Expectation
-	e.toBe = function(expected)
+	e.toBe = function(expected: any)
 		if value ~= expected then
 			fail(`expected {show(expected)}, got {show(value)}`)
 		end
 	end
-	e.toEqual = function(expected)
+	e.toEqual = function(expected: any)
 		if not deepEqual(value, expected) then
 			fail(`expected {show(expected)}, got {show(value)}`)
 		end
 	end
-	e.toBeCloseTo = function(expected, epsilon)
+	e.toBeCloseTo = function(expected: number, epsilon: number?)
 		local eps = epsilon or 1e-6
 		if typeof(value) ~= "number" or math.abs(value - expected) > eps then
 			fail(`expected {show(value)} to be within {eps} of {expected}`)
@@ -90,17 +90,17 @@ local function expect(value: any): Expectation
 			fail(`expected nil, got {show(value)}`)
 		end
 	end
-	e.toBeGreaterThan = function(other)
+	e.toBeGreaterThan = function(other: number)
 		if typeof(value) ~= "number" or value <= other then
 			fail(`expected {show(value)} > {other}`)
 		end
 	end
-	e.toBeLessThan = function(other)
+	e.toBeLessThan = function(other: number)
 		if typeof(value) ~= "number" or value >= other then
 			fail(`expected {show(value)} < {other}`)
 		end
 	end
-	e.toThrow = function(pattern)
+	e.toThrow = function(pattern: string?)
 		if typeof(value) ~= "function" then
 			fail("toThrow needs a function")
 		end
@@ -123,27 +123,32 @@ export type T = {
 
 type Result = { name: string, ok: boolean, err: string? }
 
+local function trace(err: any): string
+	return debug.traceback(tostring(err), 2)
+end
+
 local function runSpec(specName: string, spec: (T) -> ()): { Result }
 	local results: { Result } = {}
 	local path: { string } = { specName }
 	local t = {} :: T
 	t.expect = expect
-	t.describe = function(name, body)
+	t.describe = function(name: string, body: () -> ())
 		table.insert(path, name)
-		local ok, err = xpcall(body, debug.traceback)
+		local ok, err = xpcall(body :: () -> ...any, trace)
 		if not ok then
 			table.insert(results, { name = table.concat(path, " › "), ok = false, err = tostring(err) })
 		end
 		table.remove(path)
 	end
-	t.it = function(name, body)
+	t.it = function(name: string, body: () -> ())
 		local fullName = table.concat(path, " › ") .. " › " .. name
-		local ok, err = xpcall(body, debug.traceback)
+		local ok, err = xpcall(body :: () -> ...any, trace)
 		table.insert(results, { name = fullName, ok = ok, err = if ok then nil else tostring(err) })
 	end
-	local ok, err = xpcall(function()
+	local ok, err = xpcall(function(): ...any
 		spec(t)
-	end, debug.traceback)
+		return nil
+	end, trace)
 	if not ok then
 		table.insert(results, { name = specName, ok = false, err = tostring(err) })
 	end

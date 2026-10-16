@@ -79,8 +79,7 @@ Once the user approves the GDD:
 
 1. Run `technical-design` and `art-direction` without asking. Record every non-obvious choice in `docs/gamedev/decisions.md` (date, decision, alternatives, why). Decisions are reversible and visible; questions are expensive.
 2. Run `production-planning` for the next milestone. Milestones are always, in order: **M0 prototype** (core loop playable, ugly), **M1 vertical slice** (one slice at final quality), **M2 alpha** (all GDD v1 content, rough), **M3 beta / soft launch**, **M4 release**. Smaller games may merge M2 and M3; say so in the plan.
-3. Run `implementing` task by task, then `qa-playtesting` on the milestone (QA runs as the
-   `gamedev-team:qa` agent in a fresh context). After each finished task, append one line to the
+3. Run `implementing` task by task, then `qa-playtesting` on the milestone (QA runs in a fresh context: Agent tool with `subagent_type: gamedev-team:qa`). After each finished task, append one line to the
    `## Progreso` section of `docs/gamedev/state.md` so the user can glance at where things are.
 4. **Gate:** stop and show the user the milestone. Tell them how to play it in three steps (publish a
    private test place when you can, so they play on their phone), what QA found, what you decided along
@@ -94,7 +93,9 @@ You may ask a question mid-milestone only when the answer changes the GDD (a mec
 
 ## Commits
 
-Approving the GDD is the user asking for the build, so the skills commit to the game repo as they go:
+At GDD approval, ask once, in the same message as the final approval question: "A partir de aquí haré
+commits por tarea en el repo (sin push). ¿De acuerdo?" With that yes, the skills commit to the game repo as
+they go:
 one commit per approved document, one per task, messages in English (`docs(gdd): approve v1.0`). Never
 push, open PRs or create remote repos unless the user asks. Before the GDD is approved, commit only
 documents the user has said yes to. A task whose Studio verification couldn't run is committed with a
@@ -111,7 +112,7 @@ is for the model, not for them. Code identifiers, file names and commit messages
 Each role also exists as a subagent brief in `agents/`. Use them for independent review at the moments
 each skill names (the designer reviews a plan against the GDD, QA reviews an implementation, the dev lead
 reviews a tech design). Give the subagent the files, not your conclusion, so the review isn't anchored.
-They are available as Skill-tool agents named `gamedev-team:<role>`.
+Dispatch them with the Agent tool, `subagent_type: gamedev-team:<role>` (they are agents, not skills; the Skill tool won't find them).
 
 The **player psychologist** (`agents/player-psychologist.md`) is a reviewer, not a phase: dispatch it,
 with `references/design/player-psychology.md`, on the GDD before the final show, on the M1 plan and

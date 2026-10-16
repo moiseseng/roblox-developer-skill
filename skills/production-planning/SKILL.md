@@ -55,8 +55,11 @@ Small games merge M2 and M3; say so. Never skip M0: it's where the GDD meets rea
 5. **Self-review against the GDD and tech design.** Every v1 system of the milestone has tasks; every
    task has a test or a named QA check; no task says "and also"; file paths exist or are created by an
    earlier task; types and names match the tech design.
-6. **Designer review.** Dispatch `agents/game-designer.md` with the GDD and the plan: does the plan build
-   the designed game, and is anything in the plan not in the GDD? Fix.
+6. **Designer and producer review.** Dispatch `agents/game-designer.md` (Agent tool,
+   `subagent_type: gamedev-team:game-designer`) with the GDD and the plan: does the plan build the designed
+   game, and is anything in the plan not in the GDD? Dispatch `agents/producer.md`
+   (`gamedev-team:producer`) with the plan, the discovery brief and the last QA report: scope, order,
+   estimates against what the owner said about time, gate demo described in three steps. Fix both.
 7. **Hand off.** Update `state.md` (`phase: 5-build`, `milestone: M0`, `next_gate: M0 demo`) and
    start `implementing`. No user check-in is needed here under the autonomy protocol.
 

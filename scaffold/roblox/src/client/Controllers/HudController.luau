@@ -89,6 +89,9 @@ function HudController.Start()
 	player:GetAttributeChangedSignal("UpgradeLevel"):Connect(refresh)
 	refresh()
 
+	-- Show the HUD before waiting on the network: a missing remote must never mean a blank screen.
+	gui.Parent = player:WaitForChild("PlayerGui")
+
 	local request = Net.Function("RequestAction")
 	local pending = false
 	local function showStatus(text: string)
@@ -114,11 +117,9 @@ function HudController.Start()
 			showStatus(Strings.get("err_generic"))
 		elseif result ~= true then
 			local key = `err_{tostring(reason)}`
-			showStatus(Strings.get(key :: any) or Strings.get("err_generic"))
+			showStatus(if Strings.has(key) then Strings.get(key :: any) else Strings.get("err_generic"))
 		end
 	end)
-
-	gui.Parent = player:WaitForChild("PlayerGui")
 end
 
 return HudController

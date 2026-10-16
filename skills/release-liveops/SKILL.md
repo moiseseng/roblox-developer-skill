@@ -61,7 +61,8 @@ treadmill; the fix is cadence, not a streak. Quits right after a fail at one ste
 Spend that spikes right after losses, near misses or event countdowns is an ethics flag, not a win;
 check the dark-patterns list before celebrating it. Dispatch `agents/player-psychologist.md` with the
 dashboard numbers, GDD §12–13 and that reference; its three changes feed the iteration brief. Write `docs/gamedev/iteration-brief.md`: three findings with evidence, one
-proposed change each, what to measure next. Then route to `discovery` for the next round; the brief is
+proposed change each, what to measure next. Dispatch `agents/producer.md` (Agent tool,
+`subagent_type: gamedev-team:producer`) with the numbers and the draft brief: no finding without a number. Then route to `discovery` for the next round; the brief is
 its input. The pipeline is a loop.
 
 ### 6. Updates

@@ -20,7 +20,8 @@
 ## Input
 
 - Support mouse+keyboard, touch and gamepad from M1. `UserInputService` + `ContextActionService` for
-  actions with on-screen touch buttons (`CreateButton`), `GuiService.SelectedObject` and
+  actions; `ContextActionService:BindAction(name, handler, createTouchButton = true, ...keys)` gives the
+  action an on-screen touch button you can style with `SetImage`/`SetPosition`. `GuiService.SelectedObject` and
   `NextSelectionUp/Down` for gamepad navigation of menus; test every screen with a controller if the
   GDD lists console.
 - Use `UserInputService.TouchEnabled`/`GamepadEnabled` to adapt prompts ("Toca" vs "Pulsa E").

@@ -29,10 +29,10 @@ For each task in order:
 3. **Implement the smallest change that satisfies the task.** No speculative generality, no "while I'm
    here", no unrequested settings or modes. Delete dead code rather than commenting it out.
 4. **Lint, format, types.** `stylua src tests` then `selene src tests`. Zero warnings is the bar; if a rule
-   is wrong for this project, change `selene.toml` in its own commit with a reason. Selene does not check
-   types: if `luau-lsp` is installed run `luau-lsp analyze --sourcemap sourcemap.json src tests` (after
-   `rojo sourcemap -o sourcemap.json`); otherwise read Studio's Script Analysis through the MCP after the
-   sync and treat strict-mode errors as failures.
+   is wrong for this project, change `selene.toml` in its own commit with a reason. Selene does not check types: run `bash <plugin-root>/scripts/typecheck.sh .` (wraps `luau-analyze --mode=strict`,
+   with Roblox definitions when `tools/globalTypes.d.luau` is present, filtered to real errors otherwise)
+   and treat every reported error as a failure; if `luau-analyze` isn't installed, read Studio's Script
+   Analysis through the MCP after the sync.
 5. **Run the tests** in Studio: `require(game.ServerStorage.Tests.Runner).Run()` through the MCP's
    `execute_luau` (or the command bar if no MCP). All green or you're not done.
 6. **Verify the behaviour** the task describes: start a play test, drive it, read the console, take a
@@ -41,7 +41,9 @@ For each task in order:
 7. **Commit** with a message that names the task: `T03 feat(economy): cost curve + spec`. One task, one
    commit (two if a lint config changed). If step 5 or 6 couldn't run (no Studio connected), say so in
    the message with `[pending-studio]`; QA will block the gate on it until it runs.
-8. **Tick the task** in the plan file and note anything the next task needs to know.
+8. **Tick the task** in the plan file only when steps 5 and 6 actually ran. If they couldn't (no Studio),
+   mark the checkbox `[~]` with `[pending-studio]` instead of `[x]`; the plan must never read "done" while QA
+   says blocked. Note anything the next task needs to know.
 
 When the plan's tasks are all ticked, run the milestone verification list at the bottom of the plan,
 then hand to `qa-playtesting`.

@@ -1,14 +1,29 @@
 #!/usr/bin/env bash
 # SessionStart hook: inject the routing skill so the team workflow is known from the first message.
-# Output format follows the Claude Code SessionStart hook contract (hookSpecificOutput.additionalContext).
+# Output follows the Claude Code SessionStart contract: {"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"..."}}
 set -u
 ROOT="${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 SKILL="$ROOT/skills/using-gamedev-team/SKILL.md"
 [ -f "$SKILL" ] || exit 0
 
-# Strip the YAML frontmatter; the body is what the model needs.
-BODY="$(awk 'BEGIN{fm=0} /^---$/{fm++; next} fm>=2{print}' "$SKILL")"
+# Strip only the leading YAML frontmatter block; a later '---' (horizontal rule) is content.
+BODY="$(awk 'fm < 2 && /^---[[:space:]]*$/ { fm++; next } fm >= 2 { print }' "$SKILL")"
 
+CONTEXT="<gamedev-team>
+The gamedev-team plugin is installed. Its routing skill follows. Read the relevant phase skill before acting on any game-development request.
+Plugin root: $ROOT
+Phase skills: Skill tool as gamedev-team:<name> (or read <plugin root>/skills/<name>/SKILL.md). Role agents: Agent tool with subagent_type gamedev-team:<role>.
+
+$BODY
+</gamedev-team>"
+
+if command -v python3 >/dev/null 2>&1; then
+  # A real JSON encoder handles every control character and unicode case.
+  CONTEXT="$CONTEXT" python3 -c 'import json, os, sys; sys.stdout.write(json.dumps({"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": os.environ["CONTEXT"]}}) + "\n")'
+  exit 0
+fi
+
+# Fallback without python: escape what bash can, drop other control characters.
 json_escape() {
   local s="$1"
   s="${s//\\/\\\\}"
@@ -16,15 +31,7 @@ json_escape() {
   s="${s//$'\n'/\\n}"
   s="${s//$'\r'/}"
   s="${s//$'\t'/\\t}"
+  s="$(printf '%s' "$s" | tr -d '\000-\010\013\014\016-\037')"
   printf '%s' "$s"
 }
-
-CONTEXT="<gamedev-team>
-The gamedev-team plugin is installed. Its routing skill follows. Read the relevant phase skill before acting on any game-development request.
-Plugin root: $ROOT
-Phase skills can be invoked with the Skill tool as gamedev-team:<name>, or read from <plugin root>/skills/<name>/SKILL.md.
-
-$BODY
-</gamedev-team>"
-
 printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}\n' "$(json_escape "$CONTEXT")"

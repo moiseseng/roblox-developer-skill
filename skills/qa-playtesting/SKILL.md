@@ -28,8 +28,7 @@ you on what it does instead of what it should do; read it only after the explora
 
 ### 2. Run the five passes
 
-Run them as the QA role in a fresh context: dispatch `agents/qa.md` (Skill-tool agent
-`gamedev-team:qa`) with the GDD, the plan, the tech design and the build, not with the engineer's notes.
+Run them as the QA role in a fresh context: Agent tool, `subagent_type: gamedev-team:qa` (the brief in `agents/qa.md`), given the GDD, the plan, the tech design and the build, not the engineer's notes.
 The engineer who wrote the code reviewing it is not QA.
 
 - **Acceptance:** each row of the test plan, in Studio via the MCP (play test, drive the character, read

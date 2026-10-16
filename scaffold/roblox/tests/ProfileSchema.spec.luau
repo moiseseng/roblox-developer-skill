@@ -1,10 +1,11 @@
 --!strict
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local Runner = require(script.Parent.Runner)
 local Config = require(ReplicatedStorage.Shared.Config)
 local ProfileSchema = require(ReplicatedStorage.Shared.ProfileSchema)
 
-return function(t)
+return function(t: Runner.T)
 	t.describe("template", function()
 		t.it("matches the current version and config", function()
 			local profile = ProfileSchema.template()

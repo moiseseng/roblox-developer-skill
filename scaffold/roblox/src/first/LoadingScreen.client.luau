@@ -31,9 +31,7 @@ label.BackgroundTransparency = 1
 label.TextColor3 = Color3.new(1, 1, 1)
 label.TextScaled = true
 label.FontFace = Font.fromEnum(Enum.Font.GothamBold)
-label.Text = require(
-	game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("Strings") :: ModuleScript
-).get("loading")
+label.Text = "…" -- ReplicatedFirst runs before Shared replicates; keep this script dependency-free
 label.Parent = frame
 
 gui.Parent = playerGui

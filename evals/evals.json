@@ -12,7 +12,7 @@
       "id": 2,
       "name": "full-brief-produces-gdd-with-numbers",
       "prompt": "Ya tengo claro el juego: 'Goo Garden', Roblox, para 9-13 años, móvil primero, servers de 8. Loop: plantas babosas que crecen solas, las cosechas tocándolas, vendes el goo, compras semillas mejores y más macetas. Sesión de 10-15 min, vuelves porque las plantas crecen offline (máx 8h). Monetización: cosméticos y un pase 2x goo, nada de pay-to-win. Arte low-poly, colores pastel, 3 adjetivos: pegajoso, alegre, redondo. Quiero algo jugable en 3 semanas. Éxito: que mis sobrinos vuelvan al día siguiente sin que yo les diga. Escribe el documento de diseño.",
-      "expected_output": "Writes docs/gamedev/discovery.md briefly confirming the brief, then drafts the GDD section by section (vision/pillars first, asks for approval before continuing), in Spanish, with a minute-by-minute session table and cost formula with base/growth and n=1,5,10,20, [OK]/[PROP]/[OPEN] badges, a v1 vs later scope cut, and 'hecho significa' sentences. Mentions design.html rendering. Does not write code.",
+      "expected_output": "Takes the discovery fast path (zero questions), writes docs/gamedev/discovery.md, asks the single confirmation, then drafts the GDD section by section (vision/pillars first, stops and asks for approval before continuing; does not produce the whole GDD in one turn), in Spanish, with a minute-by-minute session table and a cost formula with base/growth shown for the levels that matter (n = 0, 1, 2, 3, 5 for a three-pot game; n is the count already bought), the simulator's markdown table pasted, [OK]/[PROP]/[OPEN] badges, a v1 vs later scope cut, and 'hecho significa' sentences. Mentions design.html rendering. Does not write code.",
       "files": []
     },
     {

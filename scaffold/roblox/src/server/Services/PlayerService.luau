@@ -29,7 +29,13 @@ local function onCharacterAdded(character: Model)
 	end
 end
 
+local handled: { [Player]: boolean } = {}
+
 local function onPlayerAdded(player: Player)
+	if handled[player] then
+		return -- PlayerAdded and Start's GetPlayers can both deliver the same player
+	end
+	handled[player] = true
 	player.CharacterAdded:Connect(onCharacterAdded)
 	if player.Character then
 		onCharacterAdded(player.Character)
@@ -43,7 +49,10 @@ end
 
 function PlayerService.Init()
 	Players.PlayerAdded:Connect(onPlayerAdded)
-	Players.PlayerRemoving:Connect(DataService.Release)
+	Players.PlayerRemoving:Connect(function(player)
+		handled[player] = nil
+		DataService.Release(player)
+	end)
 end
 
 function PlayerService.Start()

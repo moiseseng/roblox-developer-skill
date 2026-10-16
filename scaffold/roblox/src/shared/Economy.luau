@@ -29,13 +29,17 @@ local SUFFIXES = { "", "K", "M", "B", "T", "Qa", "Qi" }
 
 -- 1234 -> "1.23K", 999 -> "999", 1500000 -> "1.5M"
 function Economy.format(amount: number): string
-	if amount ~= amount or amount == math.huge then
-		return "∞"
+	if amount ~= amount then
+		return "?"
 	end
 	local sign = if amount < 0 then "-" else ""
 	local value = math.abs(amount)
+	if value == math.huge then
+		return sign .. "∞"
+	end
 	local tier = 1
-	while value >= 1000 and tier < #SUFFIXES do
+	-- 999.5 so that 999 999 rounds to "1M", never "1000K"
+	while value >= 999.5 and tier < #SUFFIXES do
 		value /= 1000
 		tier += 1
 	end

@@ -5,6 +5,7 @@ local RunService = game:GetService("RunService")
 local Remotes = require(script.Parent.Remotes)
 
 local FOLDER_NAME = "Remotes"
+local WAIT_SECONDS = 15
 
 local Net = {}
 
@@ -19,7 +20,9 @@ local function folder(): Folder
 		created.Parent = ReplicatedStorage
 		return created
 	end
-	return ReplicatedStorage:WaitForChild(FOLDER_NAME) :: Folder
+	local found = ReplicatedStorage:WaitForChild(FOLDER_NAME, WAIT_SECONDS)
+	assert(found, `Remotes folder not replicated after {WAIT_SECONDS}s; is the server running Net.Setup()?`)
+	return found :: Folder
 end
 
 -- Server only: create every declared remote. Idempotent.
@@ -43,7 +46,9 @@ function Net.Get(name: string): Instance
 		assert(remote, `Remote "{name}" missing on server; call Net.Setup() first`)
 		return remote
 	end
-	return container:WaitForChild(name)
+	local remote = container:WaitForChild(name, WAIT_SECONDS)
+	assert(remote, `Remote "{name}" not replicated after {WAIT_SECONDS}s`)
+	return remote
 end
 
 function Net.Event(name: string): RemoteEvent

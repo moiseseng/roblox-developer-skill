@@ -20,15 +20,16 @@ drops frames on a phone loses the majority of its audience before it loses a sin
 
 `StreamingEnabled = true` for any map larger than a hub: the client receives only nearby content.
 Consequences the code must handle: instances may not exist on the client yet (`WaitForChild` with
-timeouts, `CollectionService` added/removed signals), `ModelStreamingMode` for models that must stream
-whole (Persistent/Atomic), and `PlayerStreamingMode`. Disable only for small arenas where everything is
+timeouts, `CollectionService` added/removed signals), `Model.ModelStreamingMode` for models that must stream
+whole (Persistent/Atomic), and `Workspace.StreamingMinRadius`/`StreamingTargetRadius` tuned to the
+camera distance (verify the current property set in the docs). Disable only for small arenas where everything is
 visible anyway. The `rbx-convert-to-streaming` MCP skill audits a non-streaming game.
 
 ## World built from code
 
 Great for reproducibility, risky for instance counts: a loop that creates 50k parts will stall the
-server at start. Build in `task.wait()` chunks, use `Instance.new` with properties set before `Parent`,
-batch with `WriteParallel` where applicable, and count. Prefer one MeshPart over many parts for
+server at start. Build in `task.wait()` chunks, use `Instance.new` with properties set before `Parent`, move many
+parts at once with `workspace:BulkMoveTo` instead of per-part CFrame writes, and count. Prefer one MeshPart over many parts for
 repeated decor; use `Terrain` for ground where it fits.
 
 ## Common fixes

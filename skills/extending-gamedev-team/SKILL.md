@@ -59,7 +59,7 @@ format) plus the moments in phase skills where it is dispatched. Add the row in 
 
 Use the skill-creator skill's loop: prompts in `evals/evals.json`, with-skill and baseline subagents,
 grade against the expected outputs, review in the viewer. Store workspaces as `gamedev-team-workspace/`
-next to the plugin (git-ignored).
+inside the repo (git-ignored by `/*-workspace/`).
 
 ## When a skill fails in the field
 

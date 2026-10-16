@@ -20,6 +20,8 @@ local Config = {
 		UpgradeGrowth = 1.15,
 		MaxUpgradeLevel = 50,
 		CoinsPerUpgradeLevel = 1,
+		-- Pacing target from the GDD §5 table: the longest wait between upgrades a player should ever see.
+		TargetMaxSecondsToNextUpgrade = 60,
 	},
 
 	Player = {

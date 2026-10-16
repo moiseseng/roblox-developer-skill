@@ -75,7 +75,7 @@ references/roblox/         architecture, Luau style, networking, data, performan
                            analytics, testing, asset pipeline, market, Studio MCP, publishing
 scaffold/roblox/           Rojo starter: loader, remotes, signal, session-locked DataService,
                            economy + specs, grey-box world, HUD, test runner (verified with rojo/selene/stylua)
-scripts/                   new-game.sh, doctor.sh
+scripts/                   new-game.sh, doctor.sh, typecheck.sh (strict Luau via luau-analyze)
 hooks/                     SessionStart injection of the routing skill
 evals/                     test prompts for the skill-creator loop
 ```
@@ -86,8 +86,20 @@ the repo root.
 
 ## Conventions carried over
 
-Rojo layout with the place file as a build artifact, `selene` + `stylua`, a dependency-free test runner
-in `ServerStorage.Tests`, server authority everywhere, smallest-change discipline, comments that say why.
+Rojo layout with the place file as a build artifact, `selene` + `stylua` + `luau-analyze --mode=strict`,
+a dependency-free test runner in `ServerStorage.Tests`, server authority everywhere, smallest-change
+discipline, comments that say why.
+
+For full strict type checking put the Roblox API definitions at `tools/globalTypes.d.luau` in the game
+repo (the file `scripts/globalTypes.d.luau` from the luau-lsp project); `scripts/typecheck.sh` picks it up.
+Without it the check still runs, filtered to errors in your own code.
+
+## What "verified" means here
+
+The scaffold builds with rojo and passes selene, stylua and luau-analyze. Its specs have **not** been
+executed inside Roblox Studio by the authors; the first thing to do on a new game is open the place,
+connect Rojo and run `require(game.ServerStorage.Tests.Runner).Run()`. QA blocks every milestone gate
+until that has happened on the real build.
 
 ## Growing it
 

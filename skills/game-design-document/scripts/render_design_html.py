@@ -40,15 +40,38 @@ def inline(text: str) -> str:
 
 def _inline_no_code(text: str) -> str:
     t = html.escape(text, quote=False)
-    t = BADGE.sub(lambda m: f'<span class="badge {BADGES[m.group(1)]}">{m.group(1)}</span>', t)
     t = LINK.sub(r'<a href="\2">\1</a>', t)
+    t = BADGE.sub(lambda m: f'<span class="badge {BADGES[m.group(1)]}">{m.group(1)}</span>', t)
     t = BOLD.sub(r"<strong>\1</strong>", t)
     t = ITALIC.sub(r"<em>\1</em>", t)
     return t
 
 
+def split_cells(row: str):
+    """Split a table row on pipes that are neither escaped (\\|) nor inside a code span."""
+    cells, buf, in_code, i = [], [], False, 0
+    row = row.strip()
+    if row.startswith("|"):
+        row = row[1:]
+    if row.endswith("|") and not row.endswith("\\|"):
+        row = row[:-1]
+    while i < len(row):
+        ch = row[i]
+        if ch == "\\" and i + 1 < len(row) and row[i + 1] == "|":
+            buf.append("|"); i += 2; continue
+        if ch == "`":
+            in_code = not in_code
+        if ch == "|" and not in_code:
+            cells.append("".join(buf).strip()); buf = []
+        else:
+            buf.append(ch)
+        i += 1
+    cells.append("".join(buf).strip())
+    return cells
+
+
 def render_table(rows):
-    cells = [[c.strip() for c in r.strip().strip("|").split("|")] for r in rows]
+    cells = [split_cells(r) for r in rows]
     if len(cells) >= 2 and all(re.fullmatch(r":?-{2,}:?", c.strip() or "--") for c in cells[1]):
         head, body = cells[0], cells[2:]
     else:
@@ -213,7 +236,7 @@ def main():
     ap.add_argument("input"); ap.add_argument("output")
     ap.add_argument("--title", default=None); ap.add_argument("--lang", default="es")
     a = ap.parse_args()
-    md = Path(a.input).read_text(encoding="utf-8")
+    md = Path(a.input).read_text(encoding="utf-8", errors="replace")
     bad = re.findall(r"\[(?:OK|PROP|OPEN)\|[^\]]*\]", md)
     if bad:
         print(f"warning: {len(bad)} compound badge(s) won't render, use one badge per statement: {sorted(set(bad))[:5]}", file=sys.stderr)

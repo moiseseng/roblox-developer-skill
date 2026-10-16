@@ -52,7 +52,7 @@ function EconomyService.TryUpgrade(player: Player): (boolean, string?)
 	profile.coins -= cost
 	profile.upgradeLevel += 1
 	PlayerService.Publish(player)
-	return true
+	return true, nil
 end
 
 local function onRequest(player: Player, payload: any): (boolean, string?)

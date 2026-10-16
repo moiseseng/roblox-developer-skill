@@ -54,7 +54,14 @@ boxes.
 - **Budgets are per asset class, not per asset.** The bible sets them; the list applies them; QA checks
   the totals (`references/roblox/performance.md`).
 
-### 4. Hand off
+### 4. Review
+
+Dispatch `agents/artist.md` (Agent tool, `subagent_type: gamedev-team:artist`) with the GDD's art section,
+the bible and the asset list: scale rule applied everywhere, budgets per class filled, pivots and sizes
+recorded, palette hex values and contrast, silhouette rules for gameplay objects, licenses for store assets.
+From M1, dispatch it again on the produced assets before they replace placeholders.
+
+### 5. Hand off
 
 Update `docs/gamedev/state.md` to `phase: 4-planning` once `technical-design` is also done. In planning,
 each asset becomes a task with its budget and its placeholder-to-final swap test.

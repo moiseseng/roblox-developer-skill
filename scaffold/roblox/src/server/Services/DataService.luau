@@ -4,12 +4,14 @@
 -- changes are saved here. See references/roblox/data-persistence.md.
 
 local DataStoreService = game:GetService("DataStoreService")
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
 local Config = require(ReplicatedStorage.Shared.Config)
 local ProfileSchema = require(ReplicatedStorage.Shared.ProfileSchema)
 local Signal = require(ReplicatedStorage.Shared.Signal)
+local Strings = require(ReplicatedStorage.Shared.Strings)
 
 type Profile = ProfileSchema.Profile
 type Lock = { jobId: string, time: number }
@@ -26,6 +28,7 @@ local store = DataStoreService:GetDataStore(storeName)
 local profiles: { [Player]: Profile } = {}
 local memoryOnly: { [Player]: boolean } = {}
 local loading: { [Player]: boolean } = {}
+local releasing: { [Player]: boolean } = {}
 
 local function keyFor(player: Player): string
 	return `Player_{player.UserId}`
@@ -105,6 +108,13 @@ function DataService.Load(player: Player): Profile?
 	if profiles[player] then
 		return profiles[player]
 	end
+	if loading[player] then
+		-- Another Load for the same player is in flight (PlayerAdded and Start can both fire); share its result.
+		repeat
+			task.wait(0.1)
+		until not loading[player]
+		return profiles[player]
+	end
 	loading[player] = true
 	for attempt = 1, Config.Data.LoadAttempts do
 		local profile, reason = tryLoad(player)
@@ -140,7 +150,7 @@ function DataService.Load(player: Player): Profile?
 		task.wait(attempt * 2)
 	end
 	loading[player] = nil
-	player:Kick("No pudimos cargar tus datos. Vuelve a intentarlo en un momento.")
+	player:Kick(Strings.get("err_load"))
 	return nil
 end
 
@@ -159,19 +169,43 @@ end
 function DataService.Release(player: Player)
 	loading[player] = nil -- a Load still in flight sees this and releases its lock instead of storing
 	local profile = profiles[player]
-	if not profile then
-		return
+	if not profile or releasing[player] then
+		return -- PlayerRemoving and BindToClose can both call this; save once
 	end
+	releasing[player] = true
 	write(player, profile, true)
 	profiles[player] = nil
 	memoryOnly[player] = nil
+	releasing[player] = nil
 	DataService.ProfileReleased:Fire(player)
+end
+
+-- Permanently deletes a stored profile (right-to-be-forgotten requests). Kicks the player if online.
+-- In Studio this hits the "_dev" store; production erasures run from a live server admin path or Open Cloud.
+function DataService.Erase(userId: number): boolean
+	local online = Players:GetPlayerByUserId(userId)
+	if online then
+		profiles[online] = nil
+		memoryOnly[online] = nil
+		online:Kick(Strings.get("err_load"))
+	end
+	local ok, err = pcall(function()
+		store:RemoveAsync(`Player_{userId}`)
+	end)
+	if not ok then
+		warn(`[DataService] erase failed for {userId}: {err}`)
+	end
+	return ok
 end
 
 function DataService.Init()
 	game:BindToClose(function()
 		local pending = 0
+		local snapshot = {}
 		for player in profiles do
+			table.insert(snapshot, player)
+		end
+		for _, player in snapshot do
 			pending += 1
 			task.spawn(function()
 				DataService.Release(player)
@@ -188,9 +222,15 @@ end
 function DataService.Start()
 	while true do
 		task.wait(Config.Data.AutosaveSeconds)
+		local snapshot = {}
 		for player in profiles do
-			task.spawn(DataService.SaveNow, player)
-			task.wait(0.5) -- stagger to respect the request budget
+			table.insert(snapshot, player)
+		end
+		for _, player in snapshot do
+			if profiles[player] then
+				task.spawn(DataService.SaveNow, player)
+				task.wait(0.5) -- stagger to respect the request budget
+			end
 		end
 	end
 end

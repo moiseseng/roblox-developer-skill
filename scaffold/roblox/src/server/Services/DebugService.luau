@@ -2,6 +2,7 @@
 -- Studio-only commands for development and QA. Never runs in a published server.
 --   game.ServerStorage.Debug:Invoke("GiveCoins", userId, 500)
 --   game.ServerStorage.Debug:Invoke("ResetProfile", userId)
+--   game.ServerStorage.Debug:Invoke("DeleteProfile", userId)   -- removes the stored key (dev store in Studio)
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -16,15 +17,20 @@ local PlayerService = require(script.Parent.PlayerService)
 local DebugService = {}
 DebugService.Priority = 90
 
-type Command = (player: Player, ...any) -> any
+type Command = (player: Player?, userId: number, ...any) -> any
 
 local COMMANDS: { [string]: Command } = {
-	GiveCoins = function(player, amount)
+	DeleteProfile = function(_player, userId)
+		return DataService.Erase(userId)
+	end,
+	GiveCoins = function(player, _userId, amount)
+		assert(player, "player must be online")
 		assert(typeof(amount) == "number", "amount must be a number")
 		EconomyService.Award(player, amount)
 		return DataService.Get(player)
 	end,
-	ResetProfile = function(player)
+	ResetProfile = function(player, _userId)
+		assert(player, "player must be online")
 		local profile = DataService.Get(player)
 		assert(profile, "no profile loaded")
 		local fresh = ProfileSchema.template()
@@ -47,8 +53,7 @@ function DebugService.Init()
 		local handler = COMMANDS[command]
 		assert(handler, `unknown debug command "{command}"`)
 		local player = Players:GetPlayerByUserId(userId) or Players:GetPlayers()[1]
-		assert(player, "no player in the server")
-		return handler(player, ...)
+		return handler(player, userId, ...)
 	end
 	bindable.Parent = ServerStorage
 end

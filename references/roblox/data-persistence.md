@@ -53,8 +53,10 @@ receipt is ignored (idempotency). Return `PurchaseGranted` only after the save s
 
 ## GDPR / right to be forgotten
 
-Have a Studio-only command (DebugService) that deletes a profile by userId; Roblox may send removal
-requests. Log the command in the README.
+`DataService.Erase(userId)` removes the key (`DebugService` exposes it as `DeleteProfile` in Studio,
+where it hits the `_dev` store). Roblox sends right-to-erasure requests for published games: handle them
+from a live server admin path that calls `Erase`, or through the Open Cloud DataStore API **(verify)**.
+Log the procedure in the README.
 
 ## Testing data code
 

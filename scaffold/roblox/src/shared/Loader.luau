@@ -27,9 +27,9 @@ local function collect(container: Instance): { Entry }
 		end
 		table.insert(entries, { name = child.Name, module = result :: Module })
 	end
-	table.sort(entries, function(a, b)
-		local pa = a.module.Priority or 100
-		local pb = b.module.Priority or 100
+	table.sort(entries, function(a: Entry, b: Entry): boolean
+		local pa: number = a.module.Priority or 100
+		local pb: number = b.module.Priority or 100
 		if pa == pb then
 			return a.name < b.name
 		end

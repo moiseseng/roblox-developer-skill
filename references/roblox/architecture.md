@@ -55,7 +55,8 @@ award; it reports an action and renders the server's answer. Payloads are plain 
 
 Use `UnreliableRemoteEvent` for position/visual streams where a dropped packet doesn't matter;
 `RemoteEvent` for anything that must arrive; `RemoteFunction` only client→server when the client needs a
-reply, never server→client (a hanging client stalls the server).
+reply, never server→client (`InvokeClient` yields the server thread that called it until the client
+answers; an exploiter can simply never answer).
 
 ## State
 

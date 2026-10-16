@@ -38,7 +38,9 @@ question if something needs them. Use their language.
 "Progression feels rewarding" is not a design. Write the first session as a table: minute, what the
 player does, what they earn, what they can afford, what unlocks. Write cost curves as formulas with the
 base and the growth factor (`cost(n) = base * growth^n`) and show the levels that matter for this game
-(n = 1, 5, 10, 20 for a long simulator; n = 1, 2, 3, 5 for a three-slot game). Session targets in minutes,
+(n = 0, 1, 5, 10, 20 for a long simulator; n = 0, 1, 2, 3, 5 for a three-slot game), where **n is the
+number already bought: the first purchase is cost(0)**, the same convention as `Economy.upgradeCost(level)`
+and the simulator. Session targets in minutes,
 retention targets in percentages. If you don't know a number yet, write a range and mark it `[PROP]` so
 the economy pass in `technical-design` and the first playtest can tune it.
 
@@ -48,7 +50,7 @@ horror, fighting) write a difficulty table instead: time to first fail, retry ti
 target fail rate per step (`references/design/player-psychology.md`, "Tuning difficulty and flow").
 
 ```bash
-python3 <skill-dir>/scripts/economy_sim.py --spec docs/gamedev/economy.json
+python3 <skill-dir>/scripts/economy_sim.py --spec docs/gamedev/economy.json --markdown
 ```
 
 `economy.json` holds the GDD's formulas (see `economy_sim.py --example`). The output shows minute by
@@ -85,7 +87,10 @@ which one fails and go back to that section:
 - input is written per platform (PC, móvil, mando) for every v1 mechanic;
 - §8 names the FTUE steps and the source language; §13 has no forbidden dark pattern.
 
-When they hold, write the version line `Versión 1.0 · aprobado YYYY-MM-DD` at the top,
+When they hold, ask the one explicit question: "¿Apruebas el GDD v1.0 completo? A partir de aquí tomo las
+riendas hasta la demo M0 y haré commits por tarea en el repo (sin push)." Lock only on an explicit yes to
+that question; a yes on the last section is not it. Then write the version line
+`Versión 1.0 · aprobado YYYY-MM-DD` at the top,
 generate `design.html` (below), update `docs/gamedev/state.md` (`phase: 2-tech-design`,
 `next_gate: M0 demo`), then commit everything in one commit (`docs(gdd): v1.0 aprobado`).
 Tell the user: from here you take the wheel; the next time you need them is the M0 demo, unless something

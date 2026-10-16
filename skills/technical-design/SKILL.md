@@ -36,7 +36,8 @@ test runner, Studio-only debug commands) and makes the first commit. Run it on t
 discovery and the GDD already live in: the script accepts a target that contains only `docs/`,
 `design.html`, `README.md`, `.git` and never overwrites an existing file or `state.md`. If the repo
 already has a Rojo project, don't scaffold; map the existing layout in the doc and note deviations from
-the reference architecture.
+the reference architecture. Either way, rewrite the repo's `README.md` in the user's language with the
+game's own architecture table (the scaffold's README is a Spanish placeholder).
 
 ### 2. Systems map
 

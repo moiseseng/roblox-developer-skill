@@ -1,10 +1,11 @@
 --!strict
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local Runner = require(script.Parent.Runner)
 local Config = require(ReplicatedStorage.Shared.Config)
 local Economy = require(ReplicatedStorage.Shared.Economy)
 
-return function(t)
+return function(t: Runner.T)
 	t.describe("upgradeCost", function()
 		t.it("starts at the base cost", function()
 			t.expect(Economy.upgradeCost(0)).toBe(Config.Economy.UpgradeBaseCost)
@@ -27,9 +28,9 @@ return function(t)
 	end)
 
 	t.describe("pacing", function()
-		t.it("keeps time-to-next-upgrade bounded over the first 20 levels", function()
-			for n = 0, 20 do
-				t.expect(Economy.secondsToNextUpgrade(n)).toBeLessThan(600)
+		t.it("keeps time-to-next-upgrade under the GDD pacing target for every level", function()
+			for n = 0, Config.Economy.MaxUpgradeLevel - 1 do
+				t.expect(Economy.secondsToNextUpgrade(n)).toBeLessThan(Config.Economy.TargetMaxSecondsToNextUpgrade)
 			end
 		end)
 	end)
@@ -40,6 +41,7 @@ return function(t)
 			t.expect(Economy.format(999)).toBe("999")
 		end)
 		t.it("uses suffixes and trims zeros", function()
+			t.expect(Economy.format(999999)).toBe("1M")
 			t.expect(Economy.format(1000)).toBe("1K")
 			t.expect(Economy.format(1234)).toBe("1.23K")
 			t.expect(Economy.format(1500000)).toBe("1.5M")

@@ -1,5 +1,6 @@
 # <Nombre del juego> · Documento de diseño
 Versión 0.1 · borrador · YYYY-MM-DD · Motor: Roblox
+
 Leyenda: [OK] decidido · [PROP] propuesto, revisable · [OPEN] pendiente del dueño (un solo badge por frase, nunca dos juntos)
 
 ## 1. Visión
@@ -41,14 +42,14 @@ Una subsección por mecánica de v1. Para cada una: regla, input (PC/móvil/mand
 **Fórmulas:**
 ```
 ganancia_por_min(t)   = ...
-coste(n)              = base × crecimiento^n      (base = ..., crecimiento = ...)
+coste(n)              = base × crecimiento^n      (base = ..., crecimiento = ...; n = mejoras ya compradas, la primera cuesta coste(0))
 ```
-| n | 1 | 5 | 10 | 20 |
-|---|---|---|---|---|
-| coste | | | | |
-| minutos para pagarlo | | | | |
+| n | 0 | 1 | 5 | 10 | 20 |
+|---|---|---|---|---|---|
+| coste | | | | | |
+| minutos para pagarlo | | | | | |
 
-(Adapta los n al ritmo del juego: en un juego de 3 macetas y 15 min, n = 1, 2, 3, 5. Lo que importa es que ganancia y coste conecten; usa `scripts/economy_sim.py` y pega su tabla aquí.)
+(Adapta los n al ritmo del juego: en un juego de 3 macetas y 15 min, n = 0, 1, 2, 3, 5. Lo que importa es que ganancia y coste conecten; ejecuta `scripts/economy_sim.py --markdown` y pega su tabla aquí.)
 
 **Ritmo objetivo:** primera compra < 1 min · primera mejora grande ≈ 10 min · prestigio ≈ día 2 [PROP]
 **Qué se compra con Robux y qué nunca:** ... (postura: <cosméticos | progreso suave | ...>) [OPEN]
