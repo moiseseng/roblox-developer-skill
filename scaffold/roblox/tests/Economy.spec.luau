@@ -28,8 +28,8 @@ return function(t: Runner.T)
 	end)
 
 	t.describe("pacing", function()
-		t.it("keeps time-to-next-upgrade under the GDD pacing target for every level", function()
-			for n = 0, Config.Economy.MaxUpgradeLevel - 1 do
+		t.it("keeps time-to-next-upgrade under the GDD pacing target across the pacing horizon", function()
+			for n = 0, Config.Economy.PacingHorizonLevels - 1 do
 				t.expect(Economy.secondsToNextUpgrade(n)).toBeLessThan(Config.Economy.TargetMaxSecondsToNextUpgrade)
 			end
 		end)

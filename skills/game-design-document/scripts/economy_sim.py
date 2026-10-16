@@ -15,7 +15,7 @@ Spec (JSON):
     {"name": "pot",  "var": "pots",  "cost": "120 * 1.8 ** n", "max": 6, "start": 1}
   ],
   "offline_cap_hours": 8,
-  "offline_rate": 0.125,
+  "offline_rate": 0.02,
   "report_levels": [1, 2, 3, 5, 10]
 }
 A greedy player buys the cheapest affordable upgrade every second. `n` in a cost expression is the
@@ -39,7 +39,7 @@ EXAMPLE = {
         {"name": "pot", "var": "pots", "cost": "120 * 1.8 ** n", "max": 6, "start": 1},
     ],
     "offline_cap_hours": 8,
-    "offline_rate": 0.125,
+    "offline_rate": 0.02,
     "report_levels": [1, 2, 3, 5, 10],
 }
 

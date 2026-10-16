@@ -20,7 +20,9 @@ local Config = {
 		UpgradeGrowth = 1.15,
 		MaxUpgradeLevel = 50,
 		CoinsPerUpgradeLevel = 1,
-		-- Pacing target from the GDD §5 table: the longest wait between upgrades a player should ever see.
+		-- Pacing target from the GDD §5 table: within the first PacingHorizonLevels upgrades, a player never
+		-- waits longer than TargetMaxSecondsToNextUpgrade for the next one. Late levels are allowed to slow down.
+		PacingHorizonLevels = 20,
 		TargetMaxSecondsToNextUpgrade = 60,
 	},
 
