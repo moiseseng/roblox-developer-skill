@@ -25,20 +25,34 @@ fi
 SCAFFOLD="$PLUGIN_ROOT/scaffold/$ENGINE"
 [ -d "$SCAFFOLD" ] || { echo "no scaffold for engine '$ENGINE' (expected $SCAFFOLD)" >&2; exit 2; }
 TARGET="${TARGET:-$PWD/$NAME}"
-if [ -e "$TARGET" ] && [ -n "$(ls -A "$TARGET" 2>/dev/null)" ]; then
-  echo "target exists and is not empty: $TARGET" >&2; exit 1
+# A target that already holds the design phase (docs/, design.html, README, .git) is fine; anything else
+# that could collide with the scaffold is not.
+if [ -e "$TARGET" ]; then
+  for entry in "$TARGET"/* "$TARGET"/.[!.]*; do
+    [ -e "$entry" ] || continue
+    case "$(basename "$entry")" in
+      docs|design.html|README.md|.git|.gitignore|.DS_Store|.claude) ;;
+      *) echo "target has files the scaffold would collide with: $entry" >&2; exit 1 ;;
+    esac
+  done
 fi
 
 mkdir -p "$TARGET"
-cp -R "$SCAFFOLD/." "$TARGET/"
-rm -rf "$TARGET/build"
-
-# Replace the placeholder name in text files.
-find "$TARGET" -type f \( -name "*.luau" -o -name "*.json" -o -name "*.md" -o -name "*.toml" \) -print0 \
-  | xargs -0 perl -pi -e "s/__GAME_NAME__/$NAME/g"
+# Copy without overwriting anything that already exists (README, .gitignore, docs).
+( cd "$SCAFFOLD" && find . -type f -not -path "./build/*" -print0 ) | while IFS= read -r -d '' rel; do
+  dest="$TARGET/${rel#./}"
+  if [ -e "$dest" ]; then continue; fi
+  mkdir -p "$(dirname "$dest")"
+  cp "$SCAFFOLD/$rel" "$dest"
+  # Replace the placeholder name in text files we just created.
+  case "$dest" in
+    *.luau|*.json|*.md|*.toml) perl -pi -e "s/__GAME_NAME__/$NAME/g" "$dest" ;;
+  esac
+done
 
 TODAY="$(date +%Y-%m-%d)"
 mkdir -p "$TARGET/docs/gamedev/plans" "$TARGET/docs/gamedev/qa" "$TARGET/assets/rbxm"
+if [ ! -e "$TARGET/docs/gamedev/state.md" ]; then
 cat > "$TARGET/docs/gamedev/state.md" <<STATE
 # Estado · $NAME
 engine: $ENGINE
@@ -46,9 +60,14 @@ phase: 0-discovery
 milestone: none
 next_gate: GDD approval
 open_decisions: 0
+last_qa: none
 updated: $TODAY
+
+## Progreso
+- $TODAY proyecto creado desde el scaffold
 STATE
-cat > "$TARGET/docs/gamedev/decisions.md" <<DEC
+fi
+[ -e "$TARGET/docs/gamedev/decisions.md" ] || cat > "$TARGET/docs/gamedev/decisions.md" <<DEC
 # Decisiones · $NAME
 
 Registro de decisiones tomadas de forma autónoma por el equipo (gamedev-team). Formato: fecha · decisión · alternativas · motivo.

@@ -64,6 +64,11 @@ function ProfileSchema.migrate(data: any): Profile
 		return ProfileSchema.template()
 	end
 	local version = if typeof(data.version) == "number" then data.version else 1
+	if version > ProfileSchema.VERSION then
+		-- A newer build wrote this profile (rollback in progress). Keep every field, run no migration.
+		warn(`[ProfileSchema] profile version {version} is newer than this build ({ProfileSchema.VERSION})`)
+		return ProfileSchema.reconcile(data, ProfileSchema.template()) :: Profile
+	end
 	while version < ProfileSchema.VERSION do
 		local step = MIGRATIONS[version]
 		assert(step, `No migration from profile version {version}`)

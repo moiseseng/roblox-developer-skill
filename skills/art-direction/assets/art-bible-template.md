@@ -11,13 +11,15 @@ Tres adjetivos: ... · Referencias: ... · Lo que NO es: ...
 | Secundario | #...... | props |
 | Acento | #...... | pickups, botones primarios |
 | Peligro | #...... | enemigos, daño |
-| UI fondo / texto | #...... / #...... | |
+| UI fondo / texto | #...... / #...... | contraste ≥ 4.5:1 |
+
+Comprobación daltonismo: ningún estado se distingue solo por color (icono o forma además); simular deuteranopia sobre la paleta antes de aprobarla.
 
 ## 3. Estilo y materiales
 Low-poly / estilizado / realista · Aristas: duras / biseladas · Texturas: colores planos / atlas / PBR 512 · SurfaceAppearance: sí/no
 
 ## 4. Escala
-1 stud = ... · Personaje: R15 estándar (≈ 5 studs) / propio · Puerta: ... studs · Altura de salto: ... studs
+1 stud = ... · Personaje: R15 estándar (≈ 5 studs) / propio · **Escala de avatar:** fija en Game Settings → Avatar (mín = máx) o `HumanoidDescription` forzada, para que puertas, cámaras y hitboxes no dependan del cuerpo que traiga el jugador (los avatares varían ~3–7 studs, verify) · Puerta: ... studs · Altura de salto: ... studs
 
 ## 5. Iluminación (valores reales para default.project.json)
 Technology: ... · ClockTime: ... · Brightness: ... · Atmosphere: Density ... · Bloom/ColorCorrection: ...

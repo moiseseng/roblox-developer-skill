@@ -51,14 +51,25 @@ first-week flags and record them in the checklist.
 
 Pull: D1 retention, average session, the onboarding funnel (which step loses players), economy
 (earn versus spend, where currency piles up), top crash/errors, revenue per item. Compare against the
-GDD § live-ops targets. Write `docs/gamedev/iteration-brief.md`: three findings with evidence, one
+GDD § live-ops targets.
+
+Read the numbers through `references/design/player-psychology.md` before proposing changes. A day-1
+drop points at the first 60 s and minute 3 (an onboarding step, not the economy). Short sessions with
+strong return means appointments are doing the work: fine if the timers are honest, a risk if nothing
+intrinsic is behind them. Long sessions with weak day-7 means novelty ran out or the loop is a
+treadmill; the fix is cadence, not a streak. Quits right after a fail at one step are a difficulty wall.
+Spend that spikes right after losses, near misses or event countdowns is an ethics flag, not a win;
+check the dark-patterns list before celebrating it. Dispatch `agents/player-psychologist.md` with the
+dashboard numbers, GDD §12–13 and that reference; its three changes feed the iteration brief. Write `docs/gamedev/iteration-brief.md`: three findings with evidence, one
 proposed change each, what to measure next. Then route to `discovery` for the next round; the brief is
 its input. The pipeline is a loop.
 
 ### 6. Updates
 
-Every update: changelog entry, QA smoke pass, flags on for the new thing, publish, watch errors for an
-hour. Events and seasonal content are planned in the GDD's live-ops section first.
+Every update: bump `Config.Version`, changelog entry, QA smoke pass, flags on for the new thing, publish,
+watch errors for an hour. Rollback is Creator Hub → the place's version history → restore the previous
+version, then turn the flag off; write the exact steps in the release checklist before the first update so
+nobody learns them during an incident. Events and seasonal content are planned in the GDD's live-ops section first.
 
 ## Red flags
 

@@ -44,12 +44,12 @@
       "$properties": {
         "Gravity": 196.2,
         "FallenPartsDestroyHeight": -500,
-        "StreamingEnabled": false
+        "StreamingEnabled": true
       }
     },
     "Lighting": {
       "$properties": {
-        "Technology": "Future",
+        "Technology": "ShadowMap",
         "ClockTime": 14,
         "Brightness": 2,
         "GlobalShadows": true,

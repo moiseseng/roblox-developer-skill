@@ -3,12 +3,14 @@
 
 local Config = {
 	GameName = "__GAME_NAME__",
+	Version = "0.1.0", -- shown in the HUD so QA reports and live servers agree on what was tested
+	SourceLanguage = "es", -- language of player-facing strings (Shared.Strings); GDD §8 decides
 	Debug = false,
 
 	Data = {
-		StoreName = "PlayerData_v1",
-		AutosaveSeconds = 120,
-		LockTimeoutSeconds = 120,
+		StoreName = "PlayerData_v1", -- DataService appends "_dev" in Studio so dev never touches production
+		AutosaveSeconds = 60,
+		LockTimeoutSeconds = 300, -- keep >= 3x AutosaveSeconds or a slow autosave lets another server steal the lock
 		LoadAttempts = 5,
 	},
 

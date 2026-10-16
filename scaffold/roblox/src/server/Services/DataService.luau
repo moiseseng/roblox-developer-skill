@@ -20,9 +20,12 @@ DataService.Priority = 1
 DataService.ProfileLoaded = Signal.new() -- (player: Player, profile: Profile)
 DataService.ProfileReleased = Signal.new() -- (player: Player)
 
-local store = DataStoreService:GetDataStore(Config.Data.StoreName)
+-- Studio writes to a separate store so development never touches production data.
+local storeName = Config.Data.StoreName .. (if RunService:IsStudio() then "_dev" else "")
+local store = DataStoreService:GetDataStore(storeName)
 local profiles: { [Player]: Profile } = {}
 local memoryOnly: { [Player]: boolean } = {}
+local loading: { [Player]: boolean } = {}
 
 local function keyFor(player: Player): string
 	return `Player_{player.UserId}`
@@ -102,18 +105,26 @@ function DataService.Load(player: Player): Profile?
 	if profiles[player] then
 		return profiles[player]
 	end
+	loading[player] = true
 	for attempt = 1, Config.Data.LoadAttempts do
 		local profile, reason = tryLoad(player)
+		-- The player may have left while UpdateAsync yielded. Release the lock we just took, or the profile
+		-- leaks: autosave would refresh the lock forever and lock them out of every other server.
+		if not player.Parent or not loading[player] then
+			if profile then
+				write(player, profile, true)
+			end
+			loading[player] = nil
+			return nil
+		end
 		if profile then
 			if profile.createdAt == 0 then
 				profile.createdAt = os.time()
 			end
 			profiles[player] = profile
+			loading[player] = nil
 			DataService.ProfileLoaded:Fire(player, profile)
 			return profile
-		end
-		if not player.Parent then
-			return nil
 		end
 		if reason == "error" and RunService:IsStudio() then
 			-- No API access in Studio: run in memory so development continues, loudly.
@@ -122,11 +133,13 @@ function DataService.Load(player: Player): Profile?
 			fallback.createdAt = os.time()
 			profiles[player] = fallback
 			memoryOnly[player] = true
+			loading[player] = nil
 			DataService.ProfileLoaded:Fire(player, fallback)
 			return fallback
 		end
 		task.wait(attempt * 2)
 	end
+	loading[player] = nil
 	player:Kick("No pudimos cargar tus datos. Vuelve a intentarlo en un momento.")
 	return nil
 end
@@ -144,6 +157,7 @@ function DataService.SaveNow(player: Player): boolean
 end
 
 function DataService.Release(player: Player)
+	loading[player] = nil -- a Load still in flight sees this and releases its lock instead of storing
 	local profile = profiles[player]
 	if not profile then
 		return

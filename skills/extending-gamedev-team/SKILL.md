@@ -20,6 +20,7 @@ hooks/                 SessionStart injects using-gamedev-team
 skills/<name>/         SKILL.md (+ assets/, references/, scripts/ local to the skill)
 agents/<role>.md       reviewer / worker briefs per role
 references/<engine>/   engine knowledge shared by all skills (roblox/ today)
+references/design/     cross-engine design knowledge (player psychology)
 scaffold/<engine>/     verified starter project
 scripts/               new-game.sh, doctor.sh
 evals/evals.json       test prompts for the skill-creator loop

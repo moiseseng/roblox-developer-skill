@@ -1,7 +1,7 @@
 # gamedev-team
 
 A full game-development team as Claude Code skills. Producer, game designer, dev lead, engineer, 3D
-artist and QA, each with its own skill, taking a game from an idea to a published release: a discovery
+artist, QA and a player psychologist (reward loops, attention, ethics), each with its own skill or brief, taking a game from an idea to a published release: a discovery
 interview, a Game Design Document that the owner approves, and then an autonomous run through technical
 design, art direction, planning, implementation, QA and release, checking in only at milestone demos.
 Roblox is the first-class engine; the layout is built to grow to others.
@@ -44,7 +44,7 @@ session start and routes to the phase skill. Typical flow:
 2. **game-design-document** drafts the GDD section by section; you approve each; it renders `design.html`.
 3. You say yes to the whole GDD → Claude runs **technical-design** + **art-direction**, then
    **production-planning** for M0, **implementing** task by task with tests, **qa-playtesting**, and
-   shows you the M0 demo. Repeat per milestone (M1 vertical slice, M2 alpha, M3 beta, M4 release).
+   shows you the M0 demo, which is a fun gate: you play five minutes and decide. Repeat per milestone (M1 vertical slice, M2 alpha, M3 beta, M4 release).
 4. **release-liveops** publishes, reads week-one metrics and writes an iteration brief that feeds the
    next discovery round.
 
@@ -68,8 +68,10 @@ skills/
   qa-playtesting/          acceptance, exploratory, exploit, perf passes (+ report templates)
   release-liveops/         publish, analytics, flags, iteration brief (+ checklist)
   extending-gamedev-team/  how to add skills, roles, engines
-agents/                    reviewer/worker briefs: game-designer, producer, dev-lead, engineer, artist, qa
-references/roblox/         architecture, Luau style, networking, data, performance, UI, monetization,
+agents/                    reviewer/worker briefs: game-designer, producer, dev-lead, engineer, artist, qa,
+                           player-psychologist
+references/design/         player psychology: reward loops, attention, motivation, ethics (cross-engine)
+references/roblox/         architecture, Luau style, networking, data, performance, UI, game feel, monetization,
                            analytics, testing, asset pipeline, market, Studio MCP, publishing
 scaffold/roblox/           Rojo starter: loader, remotes, signal, session-locked DataService,
                            economy + specs, grey-box world, HUD, test runner (verified with rojo/selene/stylua)

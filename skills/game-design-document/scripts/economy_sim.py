@@ -142,6 +142,10 @@ def main():
         offline = inc * spec["offline_cap_hours"] * spec.get("offline_rate", 1.0)
         print(f"Offline (cap {spec['offline_cap_hours']} h at rate {spec.get('offline_rate', 1.0)}): "
               f"≈ {fmt(offline)} {cur} on return, vs next cost {fmt(rows[-1]['next_cost'])}")
+        nxt = rows[-1]["next_cost"]
+        if nxt and offline > 3 * nxt:
+            print("  warning: offline return exceeds 3x the next cost; the return moment buys everything at once "
+                  "and the session has no goal. Lower the cap or rate, or make the next cost scale with time away.")
     return 0
 
 

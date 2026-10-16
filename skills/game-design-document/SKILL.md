@@ -27,7 +27,8 @@ Don't write 3,000 words and ask "¿está bien?". People can't review that. Inste
 1. Write the **Vision and pillars** section (one page). Show it. Ask for the yes.
 2. Write **Core loop + mechanics**. Show, ask.
 3. Write **Progression and economy** with real numbers (see below). Show, ask.
-4. Write the rest (content, UX, art, audio, social, tech constraints, monetization, live-ops, metrics, scope, risks, open questions) in one or two batches. Show, ask.
+4. Write the rest (content, UX and the first 60 seconds, art, audio, social, monetization, live-ops, metrics,
+   **player psychology (§13)**, tech constraints, scope, risks, open questions) in one or two batches. Show, ask.
 
 Each playback: the section text, then 2 to 4 bullets of "decisiones que tomé y por qué", then one
 question if something needs them. Use their language.
@@ -41,7 +42,10 @@ base and the growth factor (`cost(n) = base * growth^n`) and show the levels tha
 retention targets in percentages. If you don't know a number yet, write a range and mark it `[PROP]` so
 the economy pass in `technical-design` and the first playtest can tune it.
 
-Don't connect the numbers in your head. Run the bundled greedy-player simulator and paste its table:
+Don't connect the numbers in your head. If the game has a cost curve (simulator, tycoon, collection, any
+upgrade shop), run the bundled greedy-player simulator and paste its table. If it is a skill game (obby,
+horror, fighting) write a difficulty table instead: time to first fail, retry time, checkpoint spacing,
+target fail rate per step (`references/design/player-psychology.md`, "Tuning difficulty and flow").
 
 ```bash
 python3 <skill-dir>/scripts/economy_sim.py --spec docs/gamedev/economy.json
@@ -71,7 +75,17 @@ half-loops. Say what "done" means for each v1 system in one testable sentence; Q
 
 ### 5. Approval and lock
 
-When all sections have a yes, write the version line `Versión 1.0 · aprobado YYYY-MM-DD` at the top,
+"All sections have a yes" is necessary, not sufficient. Lock only when all of these hold; otherwise say
+which one fails and go back to that section:
+
+- zero `[OPEN]` inside anything in v1 scope (an `[OPEN]` may survive only in "later" items);
+- the monetization stance and the audience/platform line are `[OK]`, not `[PROP]`;
+- every v1 mechanic has a "hecho significa" sentence QA can check;
+- the first-session table (§3) and the economy table (§5, with the simulator output pasted) exist and connect;
+- input is written per platform (PC, móvil, mando) for every v1 mechanic;
+- §8 names the FTUE steps and the source language; §13 has no forbidden dark pattern.
+
+When they hold, write the version line `Versión 1.0 · aprobado YYYY-MM-DD` at the top,
 generate `design.html` (below), update `docs/gamedev/state.md` (`phase: 2-tech-design`,
 `next_gate: M0 demo`), then commit everything in one commit (`docs(gdd): v1.0 aprobado`).
 Tell the user: from here you take the wheel; the next time you need them is the M0 demo, unless something
@@ -106,7 +120,10 @@ Small tuning (a number inside a `[PROP]` range) does not need the ceremony: chan
 Dispatch the `agents/game-designer.md` reviewer with the brief and the GDD and ask for: contradictions
 between sections, systems that exist in one section but not in the loop, missing "done" sentences, economy
 numbers that don't connect (earn rate versus cost curve), anything that violates Roblox policy
-(`references/roblox/monetization.md`, content rules). Fix, then show.
+(`references/roblox/monetization.md`, content rules). Also dispatch `agents/player-psychologist.md` with the
+brief, the GDD and `references/design/player-psychology.md`: it runs the reward-loop audit over §3 and §13
+and checks the dark-patterns list. A `revisar` on ethics or policy blocks the show, like a policy violation
+does. Fix, then show.
 
 ## Red flags
 

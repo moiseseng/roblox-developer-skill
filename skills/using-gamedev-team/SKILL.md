@@ -56,6 +56,9 @@ next_gate: GDD approval | M0 demo | M1 demo | ... | public launch
 open_decisions: <count of [OPEN] items in the GDD>
 last_qa: none | <path to last QA report> (<pass|blocked>)
 updated: YYYY-MM-DD
+
+## Progreso
+- YYYY-MM-DD T03 hecho: curva de coste + spec [pending-studio]
 ```
 
 If it doesn't exist and there is no `docs/gamedev/gdd.md`, you are at phase 0.
@@ -76,16 +79,26 @@ Once the user approves the GDD:
 
 1. Run `technical-design` and `art-direction` without asking. Record every non-obvious choice in `docs/gamedev/decisions.md` (date, decision, alternatives, why). Decisions are reversible and visible; questions are expensive.
 2. Run `production-planning` for the next milestone. Milestones are always, in order: **M0 prototype** (core loop playable, ugly), **M1 vertical slice** (one slice at final quality), **M2 alpha** (all GDD v1 content, rough), **M3 beta / soft launch**, **M4 release**. Smaller games may merge M2 and M3; say so in the plan.
-3. Run `implementing` task by task, then `qa-playtesting` on the milestone.
-4. **Gate:** stop and show the user the milestone. Tell them how to play it, what QA found, and what you decided along the way. Ask for a yes to continue. This is the only mandatory check-in per milestone.
+3. Run `implementing` task by task, then `qa-playtesting` on the milestone (QA runs as the
+   `gamedev-team:qa` agent in a fresh context). After each finished task, append one line to the
+   `## Progreso` section of `docs/gamedev/state.md` so the user can glance at where things are.
+4. **Gate:** stop and show the user the milestone. Tell them how to play it in three steps (publish a
+   private test place when you can, so they play on their phone), what QA found, what you decided along
+   the way, and at M0 show the palette and style chosen by `art-direction` so the look gets a reaction
+   before M1 spends time on it. **The M0 gate is a fun gate:** the user plays five minutes; if they
+   wouldn't keep going, route back through the GDD change request before any M1 work. Ask for a yes to
+   continue. This is the only mandatory check-in per milestone. M3 (soft launch) and M4 run through
+   `gamedev-team:release-liveops`; publishing settings are the user's clicks.
 
-You may ask a question mid-milestone only when the answer changes the GDD (a mechanic, the economy, the art style, the scope) or when the user must act (publish settings, pay for an asset, grant API access). Anything else: decide, log it, keep going.
+You may ask a question mid-milestone only when the answer changes the GDD (a mechanic, the economy, the art style, the scope) or when the user must act (open the place in Studio and press Rojo Connect so tests can run, publish settings, pay for an asset, grant API access). Anything else: decide, log it, keep going.
 
 ## Commits
 
 Approving the GDD is the user asking for the build, so the skills commit to the game repo as they go:
-one commit per approved document, one per task. Never push, open PRs or create remote repos unless the
-user asks. Before the GDD is approved, commit only documents the user has said yes to.
+one commit per approved document, one per task, messages in English (`docs(gdd): approve v1.0`). Never
+push, open PRs or create remote repos unless the user asks. Before the GDD is approved, commit only
+documents the user has said yes to. A task whose Studio verification couldn't run is committed with a
+`[pending-studio]` tag in the message; QA clears it or blocks on it.
 
 ## Language
 
@@ -98,6 +111,12 @@ is for the model, not for them. Code identifiers, file names and commit messages
 Each role also exists as a subagent brief in `agents/`. Use them for independent review at the moments
 each skill names (the designer reviews a plan against the GDD, QA reviews an implementation, the dev lead
 reviews a tech design). Give the subagent the files, not your conclusion, so the review isn't anchored.
+They are available as Skill-tool agents named `gamedev-team:<role>`.
+
+The **player psychologist** (`agents/player-psychologist.md`) is a reviewer, not a phase: dispatch it,
+with `references/design/player-psychology.md`, on the GDD before the final show, on the M1 plan and
+slice, and on week-one metrics. It audits reward loops, attention, motivation and ethics; its `revisar`
+on ethics blocks like a policy violation.
 
 ## Engines
 

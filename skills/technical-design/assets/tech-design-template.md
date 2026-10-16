@@ -36,7 +36,7 @@ Migraciones: v1 → v2: ...
 Atributos públicos: ... · Remotos: ... · Derivado en cliente: ...
 
 ## 7. Mundo
-Construido por código en `src/server/World` desde `src/shared/Layouts` · Streaming: on/off (motivo) · Coordenadas y escala.
+Construido por código en `src/server/World` (datos de layout en `src/shared/Data/` si el juego los tiene) · Streaming: on (por defecto; motivo si off) · Coordenadas, escala y política de tamaño de avatar.
 
 ## 8. Presupuesto de rendimiento
 | Métrica | Objetivo móvil gama baja | Cómo se mide |

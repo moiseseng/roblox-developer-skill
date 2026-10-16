@@ -27,5 +27,10 @@ Build: `commit` · QA M3: `docs/gamedev/qa/...` sin P0/P1
 | Funnel onboarding paso con más fuga | | | |
 | Errores top | | | |
 
+## Rollback (escribir antes de la primera actualización)
+1. Creator Hub → experiencia → place → historial de versiones → restaurar la anterior.
+2. Flag de la novedad → off.
+3. Anotar en el changelog qué versión está viva (`Config.Version` visible en el HUD).
+
 ## Siguiente
 → `docs/gamedev/iteration-brief.md` → discovery

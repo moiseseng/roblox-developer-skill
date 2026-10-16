@@ -1,7 +1,6 @@
 # Project layout (Rojo)
 
-The user's existing games (SlimeRun, trash-diggers) use this layout; keep it so skills, tools and habits
-transfer between projects. `scaffold/roblox/` is the verified starting point; `scripts/new-game.sh` copies it.
+Every game made with this plugin uses this layout so skills, tools and habits transfer between projects. `scaffold/roblox/` is the verified starting point; `scripts/new-game.sh` copies it.
 
 ```
 <game>/
@@ -54,7 +53,8 @@ Tests: in Studio command bar or through the MCP `execute_luau`:
 require(game.ServerStorage.Tests.Runner).Run()
 ```
 
-## Tooling present on this machine (as of the plugin's creation)
+## Tooling
 
-rojo 7.7, selene 0.32, stylua 2.5, gh, python3. Not installed: wally, rokit/aftman, lune, luau-lsp.
-`scripts/doctor.sh` checks. Add `wally` only when a dependency is actually needed; the scaffold has none.
+Required: rojo 7.7+, selene, stylua, git, python3 (for the GDD renderer and the economy simulator).
+Optional: luau-lsp (type checking outside Studio), wally (only when a dependency is actually needed; the
+scaffold has none), lune (headless Luau for CI). `scripts/doctor.sh` reports what is installed.

@@ -9,10 +9,11 @@ return function(t)
 		t.it("starts at the base cost", function()
 			t.expect(Economy.upgradeCost(0)).toBe(Config.Economy.UpgradeBaseCost)
 		end)
-		t.it("grows by the growth factor each level", function()
-			local base, growth = Config.Economy.UpgradeBaseCost, Config.Economy.UpgradeGrowth
-			for _, n in { 1, 5, 10, 20 } do
-				t.expect(Economy.upgradeCost(n)).toBe(math.floor(base * growth ^ n + 0.5))
+		t.it("matches the GDD §5 table (base 10, growth 1.15)", function()
+			-- These numbers are copied from the GDD, not recomputed from the formula: when the GDD changes,
+			-- change both. That is the whole point of the test.
+			for n, cost in { [1] = 12, [5] = 20, [10] = 40, [20] = 164 } do
+				t.expect(Economy.upgradeCost(n)).toBe(cost)
 			end
 		end)
 		t.it("rejects negative or fractional levels", function()

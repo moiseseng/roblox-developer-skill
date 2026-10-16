@@ -7,8 +7,8 @@
   "plugins": [
     {
       "name": "gamedev-team",
-      "description": "A full game-development team as skills: producer, game designer, dev lead, engineer, 3D artist and QA. Idea -> GDD -> autonomous build -> QA -> release. Roblox-first.",
-      "version": "0.1.0",
+      "description": "A full game-development team as skills: producer, game designer, dev lead, engineer, 3D artist, QA and player psychologist. Idea -> GDD -> autonomous build -> QA -> release. Roblox-first.",
+      "version": "0.2.0",
       "source": "./",
       "author": {
         "name": "Moises"

@@ -21,6 +21,20 @@
       "prompt": "El GDD de Goo Garden ya está aprobado (v1.0) y estamos en M0. Se me ocurrió que las plantas puedan tener mascotas que las rieguen solas, ¿lo metes?",
       "expected_output": "Routes through the change request protocol: names the GDD sections touched (loop, economy, content, UI, QA), proposes a GDD edit with a version bump (1.1), asks for the yes before implementing, suggests it may belong to 'later' given M0 scope; does not start coding pets.",
       "files": []
+    },
+    {
+      "id": 4,
+      "name": "autonomy-after-gdd-no-questions",
+      "prompt": "Acabo de aprobar el GDD v1.0 de Goo Garden (está en docs/gamedev/gdd.md, state.md dice phase: 2-tech-design). Toma las riendas.",
+      "expected_output": "Does NOT ask questions. Runs technical-design (scaffolds into the existing repo without clobbering docs/), art-direction, then production-planning for M0, logging choices in docs/gamedev/decisions.md and appending to state.md Progreso. Dispatches dev-lead and game-designer reviewers with files. Stops only at the M0 demo gate (or when Studio is needed to run tests), and says so.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "qa-gate-blocks-without-studio",
+      "prompt": "Terminé las tareas del plan M0 de Goo Garden pero no tengo Roblox Studio abierto ahora. Dame el veredicto de QA para pasar el gate.",
+      "expected_output": "Dispatches the QA role; the report marks acceptance rows as 'no ejecutado' and the gate as BLOQUEADO (not pass), lists exactly what the owner must do (open the place, Rojo Connect) so QA can run, and does not downgrade severities to pass.",
+      "files": []
     }
   ]
 }

@@ -32,8 +32,11 @@ bash <plugin-root>/scripts/new-game.sh "<GameName>" <target-dir>
 ```
 
 This copies the verified Rojo starter (loader, remotes, signal, data service with session locking,
-test runner), creates `docs/gamedev/`, and makes the first commit. If the repo already exists, don't
-scaffold; map the existing layout in the doc and note deviations from the reference architecture.
+test runner, Studio-only debug commands) and makes the first commit. Run it on the game repo that
+discovery and the GDD already live in: the script accepts a target that contains only `docs/`,
+`design.html`, `README.md`, `.git` and never overwrites an existing file or `state.md`. If the repo
+already has a Rojo project, don't scaffold; map the existing layout in the doc and note deviations from
+the reference architecture.
 
 ### 2. Systems map
 

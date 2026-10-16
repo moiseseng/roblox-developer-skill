@@ -28,15 +28,19 @@ For each task in order:
    (world builders, UI) is verified in Studio instead; say which in the commit.
 3. **Implement the smallest change that satisfies the task.** No speculative generality, no "while I'm
    here", no unrequested settings or modes. Delete dead code rather than commenting it out.
-4. **Lint and format.** `stylua src tests` then `selene src tests`. Zero warnings is the bar; if a rule
-   is wrong for this project, change `selene.toml` in its own commit with a reason.
+4. **Lint, format, types.** `stylua src tests` then `selene src tests`. Zero warnings is the bar; if a rule
+   is wrong for this project, change `selene.toml` in its own commit with a reason. Selene does not check
+   types: if `luau-lsp` is installed run `luau-lsp analyze --sourcemap sourcemap.json src tests` (after
+   `rojo sourcemap -o sourcemap.json`); otherwise read Studio's Script Analysis through the MCP after the
+   sync and treat strict-mode errors as failures.
 5. **Run the tests** in Studio: `require(game.ServerStorage.Tests.Runner).Run()` through the MCP's
    `execute_luau` (or the command bar if no MCP). All green or you're not done.
 6. **Verify the behaviour** the task describes: start a play test, drive it, read the console, take a
    screenshot where the result is visual. `references/roblox/studio-mcp.md` has the sequence and the
    fallbacks when no Studio is connected.
 7. **Commit** with a message that names the task: `T03 feat(economy): cost curve + spec`. One task, one
-   commit (two if a lint config changed).
+   commit (two if a lint config changed). If step 5 or 6 couldn't run (no Studio connected), say so in
+   the message with `[pending-studio]`; QA will block the gate on it until it runs.
 8. **Tick the task** in the plan file and note anything the next task needs to know.
 
 When the plan's tasks are all ticked, run the milestone verification list at the bottom of the plan,

@@ -29,8 +29,8 @@ modules' state; `Start` is where work begins. This removes require-order bugs.
 | <Loop>Service | The game's core loop rule enforcement (round, run, wave...) |
 | LeaderboardService | OrderedDataStore reads on a timer, writes on milestones |
 | MonetizationService | MarketplaceService: passes, products, `ProcessReceipt` |
-| AnalyticsService (wrapper) | Funnel/economy/progression events with one call site per event |
-| DebugService | Studio-only commands (`RunService:IsStudio()`), never in production paths |
+| Analytics (wrapper, added in M2) | Funnel/economy/progression events with one call site per event |
+| DebugService (in scaffold) | Studio-only commands (`RunService:IsStudio()`), never in production paths |
 
 Controllers mirror: HudController, ShopController, InputController, CameraController,
 EffectsController, SoundController, TutorialController.

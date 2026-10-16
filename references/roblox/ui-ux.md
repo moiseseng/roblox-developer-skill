@@ -45,10 +45,19 @@ Every action has three channels: visual (tween, particle, color flash), audio (s
 pop, bar fill). Tweens via `TweenService` with 0.1 to 0.3 s for UI; `Sound` with slight pitch
 variation. Juice is cheap; use it on the core loop first.
 
-## Accessibility
+## UX writing
 
-Color is never the only signal (icon or shape too); flashing under 3 Hz; text contrast ≥ 4.5:1; an
-option to reduce motion/particles; subtitles for any voice.
+Buttons are verbs ("Mejorar", "Comprar", "Plantar"), never nouns or "OK". One idea per line, ≤ 6 words on
+a button, ≤ 12 in a tooltip. Numbers before words ("+2x monedas"). Errors say what to do next, not what
+went wrong internally. All copy lives in `Shared.Strings` keyed by id, in the GDD's source language, so
+the designer reviews it as a copy deck and `LocalizationService` auto-translation has clean source text.
+
+## Accessibility (baseline every game ships)
+
+Settings screen with: text size (small/normal/large via a `UIScale` or the `UITextSizeConstraint`
+bounds), reduce motion (disables camera shake, big particles, screen flashes), hold-to-toggle for held
+inputs, SFX/music volumes. Color is never the only signal (icon or shape too); flashing under 3 Hz; text
+contrast ≥ 4.5:1; subtitles for any voice. QA checks each screen with large text and reduce-motion on.
 
 ## Checklist for QA
 

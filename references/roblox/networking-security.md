@@ -42,6 +42,33 @@ checks for anything movement-gated (race finish, zone reward, parkour time):
 Reject the reward on failure; don't fight the character. Cosmetic cheats (walk-speed in a hub) are not
 worth server code.
 
+## Strikes, not instant kicks
+
+```lua
+local strikes: { [Player]: number } = {}
+local function strike(player: Player, reason: string): ()
+	strikes[player] = (strikes[player] or 0) + 1
+	if strikes[player] == 1 or strikes[player] % 10 == 0 then
+		warn(`[AntiCheat] {player.Name} strike {strikes[player]}: {reason}`)
+	end
+	if strikes[player] >= 25 then -- clear pattern, not lag
+		player:Kick("Se detectó actividad inusual.")
+	end
+end
+```
+
+Clear on `PlayerRemoving`. `Players:BanAsync` exists for repeat offenders across sessions **(verify API
+and policy)**; use it from a reviewed admin path, never automatically on the first pattern.
+
+## Player-authored text and chat (kids platform)
+
+- Every string a player types that others can see (names of pets, plots, messages, signs) goes through
+  `TextService:FilterStringAsync` on the server, and the *filtered* result is what's stored and shown.
+  Unfiltered text displayed to others is a policy violation that can take the game down.
+- Chat is `TextChatService` **(verify current defaults)**; configure channels and whether chat exists at
+  all in the GDD's social section. Age guidelines affect chat and voice availability.
+- `PolicyService` decides per player what can be shown or sold; cache it at join (see `monetization.md`).
+
 ## What not to replicate
 
 - Server-only data tables (drop rates, hidden values): `ServerStorage` or `ServerScriptService`.
@@ -64,4 +91,6 @@ Secrets Store, never in code. Off by default in published settings.
 
 For each remote: wrong type · missing field · negative · huge · NaN/inf · very long string · for an item
 not owned · for another player · 50 Hz for 5 s · during the wrong state. Expected: ignored, no server
-error, no reward.
+error, no reward. Plus: a player-typed string with profanity reaches other players filtered; a
+speed/teleport exploit on the client does not earn the server-side reward; `Touched`-based rewards
+(client-influenced) are confirmed by a server distance check.

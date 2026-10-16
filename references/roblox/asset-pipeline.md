@@ -3,7 +3,10 @@
 ## Scale
 
 Roblox units are studs. A default R15 avatar is about 5 studs tall; Roblox's documented convention is
-roughly **1 stud ≈ 0.28 m** **(verify)**, but what matters is consistency: the art bible fixes "character
+roughly **1 stud ≈ 0.28 m** **(verify)**, but what matters is consistency. Player avatars vary widely
+(body scales, Rthro, roughly 3 to 7 studs **(verify)**); either fix avatar scaling in Game Settings →
+Avatar or force a `HumanoidDescription` at spawn, and write the chosen rule in the art bible, or doors,
+camera offsets and hitboxes will fit some players and not others. Consistency: the art bible fixes "character
 = 5 studs, door = 7 studs, one floor = 12 studs" and every asset obeys it. In Blender, model at
 1 unit = 1 stud and export with scale 1; check the imported bounding size in Studio against the art bible.
 

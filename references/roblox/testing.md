@@ -48,13 +48,15 @@ is pending.
 
 Studio → Test → Clients and Servers → 2 players, Start. Needed for: replication of attributes, remotes
 from a second client, what a joiner sees mid-round. The MCP targets one instance; use it for the server
-and ask the user to watch the clients, or script client behaviour with a test LocalScript behind a
-`Config.Debug` flag.
+and ask the user to watch the clients, or script client behaviour with a test LocalScript gated on
+`RunService:IsStudio()` (never on `Config.Debug`, which ships false and the Smoke spec enforces).
 
 ## Data tests
 
 API services enabled in the place; join → change → leave → rejoin; kill the server (stop) and check
-`BindToClose` saved; seed a fresh lock in the DataStore and check the second join waits/refuses.
+`BindToClose` saved; seed a fresh lock in the DataStore with a fake `jobId` (in Studio `game.JobId` is
+empty **(verify)**, so two Studio instances would not see each other's lock) and check the second join
+waits/refuses. The scaffold writes to `<StoreName>_dev` in Studio so these tests never touch production.
 
 ## What QA automates
 

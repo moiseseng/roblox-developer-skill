@@ -44,7 +44,7 @@ clearly already thought it through is the most common way this skill wastes thei
 
 ## Ground to cover
 
-Read `references/question-bank.md` for concrete phrasings and for the Roblox-specific follow-ups. The
+Read this skill's own `references/question-bank.md` (next to this file) for concrete phrasings and for the Roblox-specific follow-ups. The
 areas, in rough priority:
 
 1. **The moment.** What is the player doing that makes them smile, and what they tell a friend. This is the core fantasy; everything else serves it.
@@ -60,7 +60,10 @@ areas, in rough priority:
 
 ## Writing the brief
 
-Write `docs/gamedev/discovery.md` in the user's language using the template below. Keep it under two
+Write `docs/gamedev/discovery.md` in the user's language using the template below. It lives in the
+game's repo: if there is no folder yet, create one named after the game (PascalCase) in the directory the
+user works in and `git init` it; `technical-design` scaffolds the Rojo project into that same folder
+later. Keep it under two
 pages. Mark unresolved items as open questions, not as guesses in disguise. Then say: "Este es el
 resumen de lo que entendí. Si está bien, paso a escribir el documento de diseño." Wait for the yes.
 

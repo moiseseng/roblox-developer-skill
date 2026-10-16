@@ -30,8 +30,10 @@ label.Size = UDim2.fromScale(0.6, 0.1)
 label.BackgroundTransparency = 1
 label.TextColor3 = Color3.new(1, 1, 1)
 label.TextScaled = true
-label.Font = Enum.Font.GothamBold
-label.Text = "Cargando…"
+label.FontFace = Font.fromEnum(Enum.Font.GothamBold)
+label.Text = require(
+	game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("Strings") :: ModuleScript
+).get("loading")
 label.Parent = frame
 
 gui.Parent = playerGui

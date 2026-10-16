@@ -27,6 +27,19 @@ reports. Output: `docs/gamedev/plans/YYYY-MM-DD-<milestone>.md` (template in `as
 | **M3 beta / soft launch** | Published privately or to a small group; stable, no data loss, metrics flowing. | Bug fixing, performance, exploit tests, device matrix, publishing checklist, flags. |
 | **M4 release** | Public, with a live-ops plan. | Store page, icon/thumbnails, launch config, iteration brief. |
 
+**M0 and fun.** M0 is done when the owner has played it for five minutes on their phone and QA's
+minute-by-minute table matches GDD §3 (minute 3 looks like the GDD said). "Playable" is not the bar;
+"someone wanted to keep going" is. If it isn't fun grey, route back through the GDD change request before
+any M1 art; that is the cheapest moment the pipeline has.
+
+**M1 and feel.** The slice isn't at final quality until the core action answers inside the feedback
+budgets in `references/design/player-psychology.md` and `references/roblox/game-feel.md` (input response,
+three channels, celebration scaled to rarity), the build passes the reward-loop audit at the first 60 s
+and minute 3, a good session has a release moment to end on, and nothing earned is lost by leaving. Each is
+a task with a Studio check against GDD §13 and the M1 feel checklist in `game-feel.md`. In step 6, dispatch
+`agents/player-psychologist.md` with the GDD, the plan and that reference alongside the designer review
+for the M1 plan.
+
 Small games merge M2 and M3; say so. Never skip M0: it's where the GDD meets reality cheapest.
 
 ## Process
@@ -36,8 +49,8 @@ Small games merge M2 and M3; say so. Never skip M0: it's where the GDD meets rea
    system becomes 1 to N tasks; each asset in the list for this milestone becomes a task.
 3. **Write tasks** with the template fields: goal (one sentence), files to create or change (exact
    paths), the test that proves it (spec name and what it asserts, or the Studio check), acceptance from
-   the GDD's "hecho significa", and dependencies. Each task 30 to 120 minutes of focused work. If it's
-   bigger, split; if it needs a decision, make it here and log it.
+   the GDD's "hecho significa", and dependencies. Each task is S (≤ 1 h) or M (≤ 3 h); L (≤ 1 day) only
+   for art production. If it's bigger, split; if it needs a decision, make it here and log it.
 4. **Order** by dependency, then by risk (riskiest first; the earlier a plan is wrong, the cheaper).
 5. **Self-review against the GDD and tech design.** Every v1 system of the milestone has tasks; every
    task has a test or a named QA check; no task says "and also"; file paths exist or are created by an

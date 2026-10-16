@@ -13,6 +13,7 @@ read. Numbers marked **(verify)** are approximate or change over time: confirm w
 | `data-persistence.md` | DataStore, session locking, migrations, leaderboards, cross-server |
 | `performance.md` | Budgets, streaming, mobile, profiling |
 | `ui-ux.md` | Any screen, HUD, mobile/gamepad input, onboarding |
+| `game-feel.md` | Feedback, tweens, camera, audio, character feel; the M1 feel checklist |
 | `monetization.md` | Passes, products, subscriptions, policy, pricing |
 | `analytics-liveops.md` | Events, funnels, config flags, experiments |
 | `testing.md` | Test runner, specs, Studio verification, QA mechanics |

@@ -10,8 +10,10 @@ Players forgive an ugly game; they do not forgive lost progress. Data is an M0 f
   another server holds a fresh lock (younger than ~2 min **(verify)**), wait and retry a few times, then
   refuse to load (kick with a friendly message) rather than loading stale data and overwriting newer
   data later. Release the lock on save-at-leave. This is what ProfileService / ProfileStore do; the
-  scaffold's DataService implements a minimal version. Prefer the scaffold unless the GDD needs
-  ProfileStore features (global updates, metadata); then add the dependency with wally and log the decision.
+  scaffold's DataService implements a minimal version (lock in the same key, release on leave, no
+  store when the player left mid-load, dev store in Studio). It has not been battle-tested at scale:
+  prefer ProfileStore (wally) for a game expecting thousands of concurrent players or needing global
+  updates/metadata, and log the decision either way.
 - **`UpdateAsync`, not `SetAsync`,** for anything that could be written from two places. The
   transform function must be pure and fast; return `nil` to abort.
 - **Retry with backoff** on any DataStore error: 3 attempts, 1 s → 2 s → 4 s; log the final failure;

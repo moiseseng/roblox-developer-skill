@@ -20,6 +20,13 @@ Roblox-specific follow-ups are marked [RBX].
 - "¿Qué me hace volver mañana? ¿Y la semana que viene?"
 - [RBX] "¿La sesión típica cabe en 10 minutos en el bus, o pide una hora sentado?"
 
+## Feel and return (player psychology)
+- "Justo después de la primera recompensa, ¿qué quieres que piense el jugador: 'otra vez', 'a ver qué sale' o 'vale, ya'? ¿Qué ve en pantalla que se lo provoca?"
+- "Cuando cierra el juego, ¿qué deja a medias que quiera terminar mañana? (Una barra casi llena, algo creciendo, un amigo que aún no ha visto su base.)"
+- "¿Qué quieres que haga el jugador cuando falla: reír, reintentar al instante o pararse a pensar? Eso fija el ritmo de la dificultad."
+- [RBX] "¿Hay algo que el jugador pierda por no entrar un día?" (If yes, flag it for GDD §13: in this studio nothing earned is lost; see `references/design/player-psychology.md`.)
+- "¿En qué idioma leen tus jugadores? ¿Solo español, inglés también?" (Sets the source language of every button and tooltip; the GDD §8 records it.)
+
 ## Audience and platform
 - "¿Para quién es: niños de 8, adolescentes de 14, adultos? ¿Quién NO es el jugador?"
 - "¿Se juega solo, con amigos en el mismo server, o contra desconocidos?"
